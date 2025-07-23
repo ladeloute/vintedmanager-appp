@@ -108,187 +108,283 @@ export default function AIGenerator() {
   };
 
   return (
-    <Card className="shadow-material-1 max-w-4xl mx-auto">
-      <CardContent className="p-6">
-        <h2 className="text-2xl font-medium mb-6 flex items-center">
-          <Sparkles className="w-6 h-6 mr-3 text-accent" />
-          Générateur de descriptions Vinted avec IA
-        </h2>
-
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-          {/* Image Upload Section */}
-          <div>
-            <Label htmlFor="image">Photo de l'article *</Label>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-primary transition-colors cursor-pointer">
-              <input
-                type="file"
-                id="image"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="hidden"
-              />
-              <label htmlFor="image" className="cursor-pointer">
-                <Upload className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-                <p className="text-text-secondary">
-                  Cliquez pour sélectionner une image ou glissez-déposez
-                </p>
-                <p className="text-sm text-text-secondary mt-1">PNG, JPG jusqu'à 10MB</p>
-              </label>
+    <div className="space-y-8 p-6">
+      {/* Header Futuriste */}
+      <div className="text-center relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-xl"></div>
+        <div className="relative bg-black/20 backdrop-blur-xl border border-white/20 rounded-3xl p-8">
+          <div className="flex items-center justify-center mb-6">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl blur opacity-60 animate-pulse"></div>
+              <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-2xl p-4">
+                <Sparkles className="w-10 h-10 text-cyan-400" />
+              </div>
             </div>
+          </div>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+            Générateur IA Quantique
+          </h1>
+          <p className="text-white/70 max-w-2xl mx-auto">
+            Transformez vos photos en descriptions hypnotiques grâce à l'intelligence artificielle avancée
+          </p>
+          <div className="flex justify-center space-x-2 mt-4">
+            <div className="w-2 h-2 bg-cyan-400 rounded-full animate-ping"></div>
+            <div className="w-2 h-2 bg-purple-400 rounded-full animate-ping" style={{animationDelay: '0.2s'}}></div>
+            <div className="w-2 h-2 bg-pink-400 rounded-full animate-ping" style={{animationDelay: '0.4s'}}></div>
+          </div>
+        </div>
+      </div>
 
-            {/* Image Preview */}
-            {previewUrl && (
-              <div className="mt-4">
-                <img
-                  src={previewUrl}
-                  alt="Preview"
-                  className="rounded-lg shadow-material-1 max-w-xs max-h-64 object-cover"
-                />
+      {/* Interface Principale */}
+      <div className="relative group">
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 rounded-3xl blur-xl opacity-50 group-hover:opacity-70 transition-all duration-700"></div>
+        <Card className="relative bg-black/40 backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden">
+          <CardContent className="p-8">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent)]"></div>
+            <div className="relative z-10">
+
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+              {/* Zone de téléchargement futuriste */}
+              <div className="space-y-4">
+                <Label htmlFor="image" className="text-white/80 text-lg font-medium">Scanner quantique d'image</Label>
+                <div className="relative group/upload">
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-600/20 rounded-2xl blur group-hover/upload:blur-none transition-all duration-500"></div>
+                  <div className="relative border-2 border-dashed border-cyan-500/30 rounded-2xl p-12 text-center hover:border-cyan-400/60 transition-all duration-500 bg-black/20 backdrop-blur-xl">
+                    <input
+                      type="file"
+                      id="image"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="hidden"
+                    />
+                    <label htmlFor="image" className="cursor-pointer">
+                      <div className="relative mb-4">
+                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl blur opacity-40"></div>
+                        <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-xl p-4 mx-auto w-fit">
+                          <Upload className="w-12 h-12 text-cyan-400" />
+                        </div>
+                      </div>
+                      <p className="text-white/80 text-lg mb-2">
+                        Déposez votre image dans la matrice quantique
+                      </p>
+                      <p className="text-white/60 text-sm">PNG, JPG jusqu'à 10MB • Résolution optimale</p>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Aperçu holographique */}
+                {previewUrl && (
+                  <div className="mt-6 flex justify-center">
+                    <div className="relative group/preview">
+                      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/40 to-purple-600/40 rounded-2xl blur"></div>
+                      <div className="relative bg-black/20 backdrop-blur-xl border border-cyan-500/30 rounded-2xl p-4">
+                        <img
+                          src={previewUrl}
+                          alt="Preview"
+                          className="rounded-xl max-w-xs max-h-64 object-cover group-hover/preview:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute top-2 right-2 bg-green-500/80 backdrop-blur-sm rounded-full px-2 py-1">
+                          <span className="text-xs text-white font-mono">ANALYSÉ</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Panneau de contrôle quantique */}
+              <div className="space-y-6">
+                <h3 className="text-xl font-bold text-white/90 mb-6 flex items-center">
+                  <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse mr-3"></div>
+                  Paramètres de l'IA
+                </h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="price" className="text-white/80">Prix quantique (€)</Label>
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-green-600/20 rounded-xl blur"></div>
+                      <div className="relative bg-black/40 backdrop-blur-xl border border-emerald-500/30 rounded-xl">
+                        <Input
+                          id="price"
+                          type="number"
+                          placeholder="25"
+                          {...form.register("price")}
+                          className="bg-transparent border-0 text-white placeholder:text-white/40"
+                        />
+                        <span className="absolute right-3 top-3 text-emerald-400 font-mono">€</span>
+                      </div>
+                    </div>
+                    {form.formState.errors.price && (
+                      <p className="text-sm text-red-400">{form.formState.errors.price.message}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="size" className="text-white/80">Dimension</Label>
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-600/20 rounded-xl blur"></div>
+                      <div className="relative bg-black/40 backdrop-blur-xl border border-blue-500/30 rounded-xl">
+                        <Select onValueChange={(value) => form.setValue("size", value)}>
+                          <SelectTrigger className="bg-transparent border-0 text-white">
+                            <SelectValue placeholder="Scanner la taille" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="XS">XS</SelectItem>
+                            <SelectItem value="S">S</SelectItem>
+                            <SelectItem value="M">M</SelectItem>
+                            <SelectItem value="L">L</SelectItem>
+                            <SelectItem value="XL">XL</SelectItem>
+                            <SelectItem value="XXL">XXL</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                    {form.formState.errors.size && (
+                      <p className="text-sm text-red-400">{form.formState.errors.size.message}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="brand" className="text-white/80">Marque quantique</Label>
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-600/20 rounded-xl blur"></div>
+                      <div className="relative bg-black/40 backdrop-blur-xl border border-purple-500/30 rounded-xl">
+                        <Input
+                          id="brand"
+                          placeholder="Zara, H&M, Nike..."
+                          {...form.register("brand")}
+                          className="bg-transparent border-0 text-white placeholder:text-white/40"
+                        />
+                      </div>
+                    </div>
+                    {form.formState.errors.brand && (
+                      <p className="text-sm text-red-400">{form.formState.errors.brand.message}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="comment" className="text-white/80">Notes spéciales</Label>
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-600/20 rounded-xl blur"></div>
+                      <div className="relative bg-black/40 backdrop-blur-xl border border-amber-500/30 rounded-xl">
+                        <Input
+                          id="comment"
+                          placeholder="Défauts, particularités..."
+                          {...form.register("comment")}
+                          className="bg-transparent border-0 text-white placeholder:text-white/40"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bouton de lancement quantique */}
+              <div className="text-center mt-12">
+                <div className="relative group/button">
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-2xl blur-xl opacity-60 group-hover/button:opacity-80 transition-all duration-500"></div>
+                  <Button
+                    type="submit"
+                    disabled={generateMutation.isPending}
+                    className="relative bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 text-white px-12 py-6 rounded-2xl border border-white/20 backdrop-blur-xl font-bold text-lg transition-all duration-500 group-hover/button:scale-105"
+                  >
+                    {generateMutation.isPending ? (
+                      <>
+                        <div className="flex items-center space-x-3">
+                          <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <span>Analyse quantique en cours...</span>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex items-center space-x-3">
+                          <Sparkles className="w-6 h-6" />
+                          <span>LANCER L'IA QUANTIQUE</span>
+                        </div>
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </form>
+
+            {/* Résultats IA holographiques */}
+            {generatedContent && (
+              <div className="mt-12 space-y-8">
+                <div className="w-full h-px bg-gradient-to-r from-transparent via-cyan-500 to-transparent"></div>
+                
+                {/* Titre généré */}
+                <div className="relative group/result">
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-600/20 rounded-2xl blur"></div>
+                  <div className="relative bg-black/40 backdrop-blur-xl border border-cyan-500/30 rounded-2xl p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-xl font-bold text-white/90 flex items-center">
+                        <Heading className="w-6 h-6 mr-3 text-cyan-400" />
+                        Titre quantique généré
+                      </h3>
+                      <div className="flex space-x-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => copyToClipboard(generatedContent.title, "Titre")}
+                          className="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 border border-cyan-500/30"
+                        >
+                          <Copy className="w-4 h-4" />
+                        </Button>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={regenerate}
+                          className="bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 border border-purple-500/30"
+                        >
+                          <RefreshCw className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="bg-black/20 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-white/90">
+                      {generatedContent.title}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Description générée */}
+                <div className="relative group/result">
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-600/20 rounded-2xl blur"></div>
+                  <div className="relative bg-black/40 backdrop-blur-xl border border-purple-500/30 rounded-2xl p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-xl font-bold text-white/90 flex items-center">
+                        <FileText className="w-6 h-6 mr-3 text-purple-400" />
+                        Description complète
+                      </h3>
+                      <div className="flex space-x-2">
+                        <Button
+                          onClick={() => copyToClipboard(generatedContent.description, "Description")}
+                          className="bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 text-white border border-white/20"
+                        >
+                          <Copy className="w-4 h-4 mr-2" />
+                          Copier
+                        </Button>
+                        <Button
+                          onClick={regenerate}
+                          className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white border border-white/20"
+                        >
+                          <RefreshCw className="w-4 h-4 mr-2" />
+                          Régénérer
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="bg-black/20 backdrop-blur-sm border border-white/10 rounded-xl p-6 min-h-32 whitespace-pre-wrap text-white/90">
+                      {generatedContent.description}
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
-          </div>
-
-          {/* Manual Input Fields */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <Label htmlFor="price">Prix (€) *</Label>
-              <div className="relative">
-                <Input
-                  id="price"
-                  type="number"
-                  placeholder="ex: 25"
-                  {...form.register("price")}
-                />
-                <span className="absolute right-3 top-3 text-text-secondary">€</span>
-              </div>
-              {form.formState.errors.price && (
-                <p className="text-sm text-destructive">{form.formState.errors.price.message}</p>
-              )}
             </div>
-
-            <div>
-              <Label htmlFor="size">Taille *</Label>
-              <Select onValueChange={(value) => form.setValue("size", value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Sélectionner une taille" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="XS">XS</SelectItem>
-                  <SelectItem value="S">S</SelectItem>
-                  <SelectItem value="M">M</SelectItem>
-                  <SelectItem value="L">L</SelectItem>
-                  <SelectItem value="XL">XL</SelectItem>
-                  <SelectItem value="XXL">XXL</SelectItem>
-                </SelectContent>
-              </Select>
-              {form.formState.errors.size && (
-                <p className="text-sm text-destructive">{form.formState.errors.size.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="brand">Marque *</Label>
-              <Input
-                id="brand"
-                placeholder="ex: Zara, H&M, Nike..."
-                {...form.register("brand")}
-              />
-              {form.formState.errors.brand && (
-                <p className="text-sm text-destructive">{form.formState.errors.brand.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="comment">Commentaire (optionnel)</Label>
-              <Input
-                id="comment"
-                placeholder="ex: petite tache sous la manche"
-                {...form.register("comment")}
-              />
-            </div>
-          </div>
-
-          {/* Generate Button */}
-          <div className="text-center">
-            <Button
-              type="submit"
-              disabled={generateMutation.isPending}
-              className="bg-accent hover:bg-orange-600 text-white px-8 py-3 shadow-material-1 transform hover:scale-105 transition-all"
-            >
-              {generateMutation.isPending ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                  Génération en cours...
-                </>
-              ) : (
-                <>
-                  <Sparkles className="w-4 h-4 mr-2" />
-                  Générer avec Gemini IA
-                </>
-              )}
-            </Button>
-          </div>
-        </form>
-
-        {/* AI Generated Results */}
-        {generatedContent && (
-          <div className="mt-8 space-y-6 border-t pt-6">
-            {/* Generated Heading */}
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-medium flex items-center">
-                  <Heading className="w-4 h-4 mr-2 text-primary" />
-                  Titre généré
-                </h3>
-                <div className="flex space-x-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => copyToClipboard(generatedContent.title, "Titre")}
-                  >
-                    <Copy className="w-4 h-4" />
-                  </Button>
-                  <Button variant="ghost" size="sm" onClick={regenerate}>
-                    <RefreshCw className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-              <div className="bg-surface p-3 rounded border">
-                {generatedContent.title}
-              </div>
-            </div>
-
-            {/* Generated Description */}
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-medium flex items-center">
-                  <FileText className="w-4 h-4 mr-2 text-primary" />
-                  Description complète
-                </h3>
-                <div className="flex space-x-2">
-                  <Button
-                    onClick={() => copyToClipboard(generatedContent.description, "Description")}
-                    className="bg-primary hover:bg-blue-600"
-                  >
-                    <Copy className="w-4 h-4 mr-2" />
-                    Copier
-                  </Button>
-                  <Button
-                    onClick={regenerate}
-                    className="bg-accent hover:bg-orange-600"
-                  >
-                    <RefreshCw className="w-4 h-4 mr-2" />
-                    Régénérer
-                  </Button>
-                </div>
-              </div>
-              <div className="bg-surface p-4 rounded border min-h-32 whitespace-pre-wrap">
-                {generatedContent.description}
-              </div>
-            </div>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 }

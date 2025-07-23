@@ -75,102 +75,159 @@ export default function ChatAssistant() {
   ];
 
   return (
-    <Card className="shadow-material-1 max-w-4xl mx-auto">
-      <CardContent className="p-6">
-        <h2 className="text-2xl font-medium mb-6 flex items-center">
-          <Bot className="w-6 h-6 mr-3 text-primary" />
-          Assistant réponses client avec Gemini
-        </h2>
-
-        {/* Input Customer Message */}
-        <div className="mb-6">
-          <Label htmlFor="customerMessage">Message reçu d'un acheteur</Label>
-          <Textarea
-            id="customerMessage"
-            rows={4}
-            placeholder="Collez ici le message que vous avez reçu..."
-            value={customerMessage}
-            onChange={(e) => setCustomerMessage(e.target.value)}
-            className="resize-none"
-          />
-
-          <div className="mt-4 text-center">
-            <Button
-              onClick={handleGenerate}
-              disabled={generateMutation.isPending}
-              className="bg-primary hover:bg-blue-600 px-6 py-3 shadow-material-1"
-            >
-              {generateMutation.isPending ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                  Génération en cours...
-                </>
-              ) : (
-                <>
-                  <Bot className="w-4 h-4 mr-2" />
-                  Générer des réponses
-                </>
-              )}
-            </Button>
+    <div className="space-y-8 p-6">
+      {/* Header Futuriste */}
+      <div className="text-center relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-green-500/10 rounded-3xl blur-xl"></div>
+        <div className="relative bg-black/20 backdrop-blur-xl border border-white/20 rounded-3xl p-8">
+          <div className="flex items-center justify-center mb-6">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-2xl blur opacity-60 animate-pulse"></div>
+              <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-2xl p-4">
+                <Bot className="w-10 h-10 text-cyan-400" />
+              </div>
+            </div>
+          </div>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-green-400 bg-clip-text text-transparent mb-4">
+            Assistant Conversationnel IA
+          </h1>
+          <p className="text-white/70 max-w-2xl mx-auto">
+            Générez des réponses professionnelles et empathiques avec l'intelligence artificielle avancée
+          </p>
+          <div className="flex justify-center space-x-2 mt-4">
+            <div className="w-2 h-2 bg-blue-400 rounded-full animate-ping"></div>
+            <div className="w-2 h-2 bg-cyan-400 rounded-full animate-ping" style={{animationDelay: '0.2s'}}></div>
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-ping" style={{animationDelay: '0.4s'}}></div>
           </div>
         </div>
+      </div>
 
-        {/* AI Generated Responses */}
-        {responses.length > 0 && (
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium flex items-center mb-4">
-              <MessageCircle className="w-5 h-5 mr-2" />
-              Réponses suggérées par Gemini
-            </h3>
+      {/* Interface Principale */}
+      <div className="relative group">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-cyan-500/20 to-green-500/20 rounded-3xl blur-xl opacity-50 group-hover:opacity-70 transition-all duration-700"></div>
+        <Card className="relative bg-black/40 backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden">
+          <CardContent className="p-8">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent)]"></div>
+            <div className="relative z-10 space-y-8">
 
-            {responses.map((response, index) => (
-              <div
-                key={index}
-                className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <Badge className={`${responseLabels[index].color} mb-2`}>
-                      {responseLabels[index].label}
-                    </Badge>
-                    <p className="text-text-primary">{response}</p>
-                  </div>
-                  <div className="flex space-x-2 ml-4">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => copyToClipboard(response, index)}
-                      className="text-text-secondary hover:text-primary"
-                    >
-                      <Copy className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => regenerateResponse(index)}
-                      className="text-text-secondary hover:text-accent"
-                    >
-                      <RefreshCw className="w-4 h-4" />
-                    </Button>
+              {/* Zone de saisie quantique */}
+              <div className="space-y-4">
+                <Label htmlFor="customerMessage" className="text-white/80 text-lg font-medium">Message client détecté</Label>
+                <div className="relative group/input">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-600/20 rounded-2xl blur group-hover/input:blur-none transition-all duration-500"></div>
+                  <div className="relative bg-black/40 backdrop-blur-xl border border-blue-500/30 rounded-2xl">
+                    <Textarea
+                      id="customerMessage"
+                      rows={6}
+                      placeholder="Analysez le message client pour générer des réponses intelligentes..."
+                      value={customerMessage}
+                      onChange={(e) => setCustomerMessage(e.target.value)}
+                      className="resize-none bg-transparent border-0 text-white placeholder:text-white/40 text-lg p-6"
+                    />
                   </div>
                 </div>
               </div>
-            ))}
 
-            {/* Regenerate All Button */}
-            <div className="text-center pt-4">
-              <Button
-                onClick={handleGenerate}
-                variant="outline"
-                className="bg-accent hover:bg-orange-600 text-white border-accent"
-              >
-                <RefreshCw className="w-4 h-4 mr-2" />
-                Régénérer toutes les réponses
-              </Button>
+              {/* Bouton de génération */}
+              <div className="text-center">
+                <div className="relative group/button">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-cyan-500 to-green-500 rounded-2xl blur-xl opacity-60 group-hover/button:opacity-80 transition-all duration-500"></div>
+                  <Button
+                    onClick={handleGenerate}
+                    disabled={generateMutation.isPending}
+                    className="relative bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white px-12 py-6 rounded-2xl border border-white/20 backdrop-blur-xl font-bold text-lg transition-all duration-500 group-hover/button:scale-105"
+                  >
+                    {generateMutation.isPending ? (
+                      <>
+                        <div className="flex items-center space-x-3">
+                          <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <span>Analyse neuronale...</span>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex items-center space-x-3">
+                          <MessageCircle className="w-6 h-6" />
+                          <span>GÉNÉRER 3 RÉPONSES IA</span>
+                        </div>
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
+
+              {/* Réponses générées holographiques */}
+              {responses.length > 0 && (
+                <div className="space-y-8">
+                  <div className="w-full h-px bg-gradient-to-r from-transparent via-cyan-500 to-transparent"></div>
+                  
+                  <h3 className="text-2xl font-bold text-white/90 text-center flex items-center justify-center">
+                    <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse mr-3"></div>
+                    Réponses quantiques générées
+                  </h3>
+                  
+                  <div className="space-y-6">
+                    {responses.map((response, index) => (
+                      <div key={index} className="relative group/response">
+                        <div className={`absolute inset-0 rounded-2xl blur transition-all duration-500 ${
+                          index === 0 ? 'bg-gradient-to-r from-emerald-500/20 to-green-600/20' :
+                          index === 1 ? 'bg-gradient-to-r from-blue-500/20 to-cyan-600/20' :
+                          'bg-gradient-to-r from-purple-500/20 to-pink-600/20'
+                        }`}></div>
+                        <div className={`relative backdrop-blur-xl border rounded-2xl p-6 ${
+                          index === 0 ? 'bg-black/40 border-emerald-500/30' :
+                          index === 1 ? 'bg-black/40 border-blue-500/30' :
+                          'bg-black/40 border-purple-500/30'
+                        }`}>
+                          <div className="flex items-center justify-between mb-4">
+                            <Badge className={`${
+                              index === 0 ? 'bg-emerald-500/80 text-white' :
+                              index === 1 ? 'bg-blue-500/80 text-white' :
+                              'bg-purple-500/80 text-white'
+                            } backdrop-blur-sm border border-white/20`}>
+                              {responseLabels[index].label}
+                            </Badge>
+                            <div className="flex space-x-2">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => copyToClipboard(response, index)}
+                                className={`${
+                                  index === 0 ? 'bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30' :
+                                  index === 1 ? 'bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 border border-blue-500/30' :
+                                  'bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 border border-purple-500/30'
+                                }`}
+                              >
+                                <Copy className="w-4 h-4" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => regenerateResponse(index)}
+                                disabled={generateMutation.isPending}
+                                className={`${
+                                  index === 0 ? 'bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30' :
+                                  index === 1 ? 'bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 border border-blue-500/30' :
+                                  'bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 border border-purple-500/30'
+                                }`}
+                              >
+                                <RefreshCw className="w-4 h-4" />
+                              </Button>
+                            </div>
+                          </div>
+                          <div className="bg-black/20 backdrop-blur-sm border border-white/10 rounded-xl p-6 whitespace-pre-wrap text-white/90">
+                            {response}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 }
