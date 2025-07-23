@@ -132,35 +132,37 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="space-y-8 p-6">
-      {/* Header avec particules quantiques */}
+    <div className="space-y-4 sm:space-y-8 p-4 sm:p-6">
+      {/* Header avec particules quantiques - Mobile/Desktop */}
       <div className="text-center relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-xl"></div>
-        <div className="relative bg-black/20 backdrop-blur-xl border border-white/20 rounded-3xl p-8">
-          <div className="flex items-center justify-center mb-6">
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl sm:rounded-3xl blur-xl"></div>
+        <div className="relative bg-black/20 backdrop-blur-xl border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-8">
+          <div className="flex items-center justify-center mb-4 sm:mb-6">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl blur opacity-60 animate-pulse"></div>
-              <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-2xl p-4">
-                <BarChart3 className="w-10 h-10 text-cyan-400" />
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl sm:rounded-2xl blur opacity-60 animate-pulse"></div>
+              <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-xl sm:rounded-2xl p-3 sm:p-4">
+                <BarChart3 className="w-8 h-8 sm:w-10 sm:h-10 text-cyan-400" />
               </div>
             </div>
           </div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
-            Tableau de Bord Quantique
+          <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-2 sm:mb-4">
+            <span className="sm:hidden">Dashboard Futur</span>
+            <span className="hidden sm:inline">Tableau de Bord Quantique</span>
           </h1>
-          <p className="text-white/70 max-w-2xl mx-auto">
-            Surveillez vos performances de vente avec une intelligence artificielle avancée
+          <p className="text-white/70 max-w-2xl mx-auto text-sm sm:text-base">
+            <span className="sm:hidden">IA avancée pour vos ventes</span>
+            <span className="hidden sm:inline">Surveillez vos performances de vente avec une intelligence artificielle avancée</span>
           </p>
           <div className="flex justify-center space-x-2 mt-4">
-            <div className="w-2 h-2 bg-cyan-400 rounded-full animate-ping"></div>
-            <div className="w-2 h-2 bg-purple-400 rounded-full animate-ping" style={{animationDelay: '0.2s'}}></div>
-            <div className="w-2 h-2 bg-pink-400 rounded-full animate-ping" style={{animationDelay: '0.4s'}}></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-cyan-400 rounded-full animate-ping"></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-400 rounded-full animate-ping" style={{animationDelay: '0.2s'}}></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-pink-400 rounded-full animate-ping" style={{animationDelay: '0.4s'}}></div>
           </div>
         </div>
       </div>
 
-      {/* Holographic Performance Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+      {/* Holographic Performance Cards - Mobile/Desktop */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 mb-8 sm:mb-12">
         {performanceCards.map((card, index) => (
           <div key={index} className="group relative">
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition-all duration-500 animate-pulse"></div>
@@ -200,29 +202,30 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {/* Quantum Revenue Center */}
-      <div className="relative group mb-12">
-        <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-cyan-500 to-purple-600 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-all duration-700 animate-pulse"></div>
-        <Card className="relative bg-black/60 backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden">
-          <CardContent className="p-12">
+      {/* Quantum Revenue Center - Mobile/Desktop */}
+      <div className="relative group mb-8 sm:mb-12">
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-cyan-500 to-purple-600 rounded-2xl sm:rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-all duration-700 animate-pulse"></div>
+        <Card className="relative bg-black/60 backdrop-blur-2xl border border-white/20 rounded-2xl sm:rounded-3xl overflow-hidden">
+          <CardContent className="p-6 sm:p-12">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent)]"></div>
             <div className="relative z-10">
-              <div className="text-center mb-12">
-                <h3 className="text-3xl font-bold bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent mb-4">
-                  Centre de Revenus Quantique
+              <div className="text-center mb-6 sm:mb-12">
+                <h3 className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent mb-4">
+                  <span className="sm:hidden">Revenus Quantique</span>
+                  <span className="hidden sm:inline">Centre de Revenus Quantique</span>
                 </h3>
-                <div className="flex justify-center space-x-4 mb-8">
-                  <div className="w-3 h-3 bg-emerald-400 rounded-full animate-bounce"></div>
-                  <div className="w-3 h-3 bg-cyan-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                  <div className="w-3 h-3 bg-purple-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                <div className="flex justify-center space-x-2 sm:space-x-4 mb-4 sm:mb-8">
+                  <div className="w-2 h-2 sm:w-3 sm:h-3 bg-emerald-400 rounded-full animate-bounce"></div>
+                  <div className="w-2 h-2 sm:w-3 sm:h-3 bg-cyan-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                  <div className="w-2 h-2 sm:w-3 sm:h-3 bg-purple-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
                 </div>
               </div>
               
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
                 {/* Monthly Revenue */}
                 <div className="relative group/card">
                   <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-green-600/20 rounded-2xl blur group-hover/card:blur-none transition-all duration-500"></div>
-                  <div className="relative bg-black/40 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-6 hover:border-emerald-400/60 transition-all duration-500">
+                  <div className="relative bg-black/40 backdrop-blur-xl border border-emerald-500/30 rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:border-emerald-400/60 transition-all duration-500">
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-3 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl">
                         <TrendingUp className="w-6 h-6 text-white" />

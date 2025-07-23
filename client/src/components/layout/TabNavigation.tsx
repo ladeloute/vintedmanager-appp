@@ -14,12 +14,14 @@ export default function TabNavigation({ activeTab, onTabChange }: TabNavigationP
   ];
 
   return (
-    <div className="mb-8">
+    <div className="mb-4 sm:mb-8">
       {/* Navigation Quantique */}
       <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl blur"></div>
-        <div className="relative bg-black/20 backdrop-blur-xl border border-white/10 rounded-2xl p-2">
-          <nav className="flex space-x-2">
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 rounded-xl sm:rounded-2xl blur"></div>
+        <div className="relative bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl p-1 sm:p-2">
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden sm:flex space-x-2">
             {tabs.map(({ id, label, icon: Icon }, index) => (
               <button
                 key={id}
@@ -62,6 +64,61 @@ export default function TabNavigation({ activeTab, onTabChange }: TabNavigationP
                 )}
               </button>
             ))}
+          </nav>
+
+          {/* Mobile Navigation - Style futuriste vertical */}
+          <nav className="sm:hidden">
+            <div className="grid grid-cols-2 gap-2">
+              {tabs.map(({ id, label, icon: Icon }, index) => (
+                <button
+                  key={id}
+                  onClick={() => onTabChange(id)}
+                  className={`group relative p-4 rounded-xl transition-all duration-500 ${
+                    activeTab === id
+                      ? "bg-gradient-to-br from-cyan-500/30 via-purple-600/30 to-pink-500/30 border border-cyan-400/50 shadow-lg shadow-cyan-500/20"
+                      : "bg-black/30 hover:bg-white/5 border border-white/10 hover:border-white/20"
+                  }`}
+                >
+                  <div className="flex flex-col items-center space-y-2">
+                    <div className={`relative p-3 rounded-xl transition-all duration-300 ${
+                      activeTab === id 
+                        ? "bg-gradient-to-br from-cyan-500 to-purple-600 shadow-lg shadow-cyan-500/30" 
+                        : "bg-white/10 group-hover:bg-white/20"
+                    }`}>
+                      <Icon className={`w-6 h-6 transition-all duration-300 ${
+                        activeTab === id ? "text-white" : "text-white/60 group-hover:text-white/80"
+                      }`} />
+                      
+                      {/* Effet de glow pour l'icône active */}
+                      {activeTab === id && (
+                        <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/50 to-purple-600/50 rounded-xl blur animate-pulse"></div>
+                      )}
+                    </div>
+                    
+                    <div className="text-center">
+                      <div className={`text-xs font-medium transition-all duration-300 leading-tight ${
+                        activeTab === id ? "text-white" : "text-white/60 group-hover:text-white/80"
+                      }`}>
+                        {label.split(' ')[0]}
+                      </div>
+                      {activeTab === id && (
+                        <div className="text-xs text-cyan-400 font-mono mt-1 animate-pulse">●</div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  {/* Effets de particules pour l'onglet actif mobile */}
+                  {activeTab === id && (
+                    <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none">
+                      <div className="absolute top-1 left-1 w-1 h-1 bg-cyan-400 rounded-full animate-ping"></div>
+                      <div className="absolute top-1 right-1 w-1 h-1 bg-purple-400 rounded-full animate-ping delay-300"></div>
+                      <div className="absolute bottom-1 left-1 w-1 h-1 bg-pink-400 rounded-full animate-ping delay-500"></div>
+                      <div className="absolute bottom-1 right-1 w-1 h-1 bg-yellow-400 rounded-full animate-ping delay-700"></div>
+                    </div>
+                  )}
+                </button>
+              ))}
+            </div>
           </nav>
         </div>
       </div>
