@@ -67,5 +67,15 @@ app.use((req, res, next) => {
     reusePort: true,
   }, () => {
     log(`serving on port ${port}`);
+    
+    // Démarrer le keep-alive en développement
+    if (process.env.NODE_ENV === "development") {
+      // Auto-ping toutes les 5 minutes pour garder l'app active
+      setInterval(() => {
+        fetch(`http://localhost:${port}/ping`)
+          .then(() => console.log('Keep-alive ping sent'))
+          .catch(() => console.log('Keep-alive ping failed'));
+      }, 5 * 60 * 1000); // 5 minutes
+    }
   });
 })();

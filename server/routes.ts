@@ -12,6 +12,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Serve uploaded images
   app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
+  // Keep-alive endpoint
+  app.get("/ping", (req, res) => {
+    res.json({ status: "alive", timestamp: new Date().toISOString() });
+  });
+
   // Articles routes
   app.get("/api/articles", async (req, res) => {
     try {
