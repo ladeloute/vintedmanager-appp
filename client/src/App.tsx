@@ -31,12 +31,32 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="min-h-screen bg-background">
-          <AppHeader activeTab={activeTab} onTabChange={setActiveTab} />
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
+          {/* Futuristic Header */}
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-purple-900/40 to-black/60 backdrop-blur-xl border-b border-white/10"></div>
+            <div className="relative z-10">
+              <AppHeader activeTab={activeTab} onTabChange={setActiveTab} />
+            </div>
+          </div>
           
-          <div className="container mx-auto px-4 py-6 max-w-7xl">
-            <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
-            {renderContent()}
+          {/* Main Content Area */}
+          <div className="relative">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(120,119,198,0.1),transparent)]"></div>
+            <div className="relative z-10 container mx-auto px-6 py-8 max-w-7xl">
+              {/* Futuristic Tab Navigation */}
+              <div className="mb-8">
+                <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+              </div>
+              
+              {/* Content with Glassmorphism Effect */}
+              <div className="relative">
+                <div className="absolute inset-0 bg-black/10 backdrop-blur-sm rounded-3xl border border-white/5"></div>
+                <div className="relative z-10 p-1">
+                  {renderContent()}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         
