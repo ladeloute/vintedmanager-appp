@@ -52,15 +52,15 @@ function App() {
             {/* Main Content Area */}
             <div className="relative">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(120,119,198,0.1),transparent)]"></div>
-              <div className="relative z-10 container mx-auto px-6 py-8 max-w-7xl">
+              <div className="relative z-10 container mx-auto px-4 sm:px-6 py-4 sm:py-8 max-w-7xl">
                 {/* Futuristic Tab Navigation */}
-                <div className="mb-8">
+                <div className="mb-4 sm:mb-8">
                   <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
                 </div>
                 
                 {/* Content with Glassmorphism Effect */}
                 <div className="relative">
-                  <div className="absolute inset-0 bg-black/10 backdrop-blur-sm rounded-3xl border border-white/5"></div>
+                  <div className="absolute inset-0 bg-black/10 backdrop-blur-sm rounded-2xl sm:rounded-3xl border border-white/5"></div>
                   <div className="relative z-10 p-1">
                     {renderContent()}
                   </div>

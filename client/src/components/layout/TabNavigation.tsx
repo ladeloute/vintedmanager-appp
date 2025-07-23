@@ -14,40 +14,48 @@ export default function TabNavigation({ activeTab, onTabChange }: TabNavigationP
   ];
 
   return (
-    <div className="mb-8">
+    <div className="mb-4 sm:mb-8">
       {/* Navigation Quantique */}
       <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl blur"></div>
-        <div className="relative bg-black/20 backdrop-blur-xl border border-white/10 rounded-2xl p-2">
-          <nav className="flex space-x-2">
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 rounded-xl sm:rounded-2xl blur"></div>
+        <div className="relative bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl p-1 sm:p-2">
+          <nav className="flex space-x-1 sm:space-x-2">
             {tabs.map(({ id, label, icon: Icon }, index) => (
               <button
                 key={id}
                 onClick={() => onTabChange(id)}
-                className={`group relative flex-1 px-6 py-4 rounded-xl transition-all duration-500 ${
+                className={`group relative flex-1 px-2 sm:px-6 py-2 sm:py-4 rounded-lg sm:rounded-xl transition-all duration-500 ${
                   activeTab === id
                     ? "bg-gradient-to-r from-cyan-500/30 to-purple-600/30 border border-cyan-500/50"
                     : "hover:bg-white/5 hover:border hover:border-white/10"
                 }`}
               >
-                <div className="flex items-center justify-center space-x-3">
-                  <div className={`p-2 rounded-lg transition-all duration-300 ${
+                {/* Mobile Layout: Icon + Label stacked */}
+                <div className="flex flex-col sm:flex-row items-center justify-center space-y-1 sm:space-y-0 sm:space-x-3">
+                  <div className={`p-1 sm:p-2 rounded-md sm:rounded-lg transition-all duration-300 ${
                     activeTab === id 
                       ? "bg-gradient-to-br from-cyan-500 to-purple-600 shadow-lg shadow-cyan-500/25" 
                       : "bg-white/10 group-hover:bg-white/20"
                   }`}>
-                    <Icon className={`w-5 h-5 transition-all duration-300 ${
+                    <Icon className={`w-4 h-4 sm:w-5 sm:h-5 transition-all duration-300 ${
                       activeTab === id ? "text-white" : "text-white/60 group-hover:text-white/80"
                     }`} />
                   </div>
-                  <div className="text-center">
-                    <div className={`text-sm font-medium transition-all duration-300 ${
+                  <div className="text-center sm:text-left">
+                    <div className={`text-xs sm:text-sm font-medium transition-all duration-300 leading-tight ${
                       activeTab === id ? "text-white" : "text-white/60 group-hover:text-white/80"
                     }`}>
-                      {label}
+                      {/* Mobile: Show short labels */}
+                      <span className="sm:hidden">
+                        {label.split(' ')[0]}
+                      </span>
+                      {/* Desktop: Show full labels */}
+                      <span className="hidden sm:inline">
+                        {label}
+                      </span>
                     </div>
                     {activeTab === id && (
-                      <div className="text-xs text-cyan-400 font-mono mt-1">ACTIVE</div>
+                      <div className="text-xs text-cyan-400 font-mono mt-1 hidden sm:block">ACTIVE</div>
                     )}
                   </div>
                 </div>

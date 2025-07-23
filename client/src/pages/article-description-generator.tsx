@@ -130,46 +130,47 @@ export default function ArticleDescriptionGenerator({ onBack }: ArticleDescripti
         }}></div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-6 py-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center space-x-4">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-4 sm:py-8">
+        {/* Header Mobile/Desktop */}
+        <div className="mb-6 sm:mb-8">
+          <div className="flex items-center justify-between mb-4">
             <div className="relative group/back">
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-xl blur opacity-0 group-hover/back:opacity-100 transition-all duration-300"></div>
               <Button
                 onClick={onBack}
-                className="relative bg-black/40 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 backdrop-blur-xl"
+                className="relative bg-black/40 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 backdrop-blur-xl text-sm sm:text-base"
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
+                <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
                 Retour
               </Button>
             </div>
-            
-            <div className="flex items-center space-x-3">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl blur opacity-60 animate-pulse"></div>
-                <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-xl p-3">
-                  <Sparkles className="w-8 h-8 text-cyan-400" />
-                </div>
+          </div>
+          
+          <div className="flex items-center space-x-3">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl blur opacity-60 animate-pulse"></div>
+              <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-xl p-2 sm:p-3">
+                <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-cyan-400" />
               </div>
-              <div>
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  Générateur IA de Description
-                </h1>
-                <p className="text-white/60">Analyse quantique de votre article</p>
-              </div>
+            </div>
+            <div>
+              <h1 className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Générateur IA
+              </h1>
+              <p className="text-white/60 text-sm sm:text-base hidden sm:block">Analyse quantique de votre article</p>
+              <p className="text-white/60 text-xs sm:hidden">IA Description</p>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
           {/* Article Info */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-green-600/10 rounded-2xl blur"></div>
               <Card className="relative bg-black/40 backdrop-blur-xl border border-white/20">
-                <CardContent className="p-6">
-                  <h2 className="text-xl font-bold text-white/90 mb-4 flex items-center">
+                <CardContent className="p-4 sm:p-6">
+                  <h2 className="text-lg sm:text-xl font-bold text-white/90 mb-4 flex items-center">
                     <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse mr-3"></div>
                     Article analysé
                   </h2>
@@ -181,48 +182,48 @@ export default function ArticleDescriptionGenerator({ onBack }: ArticleDescripti
                         <img
                           src={article.imageUrl}
                           alt={article.name}
-                          className="relative w-full h-48 object-cover rounded-xl border border-white/20"
+                          className="relative w-full h-32 sm:h-48 object-cover rounded-xl border border-white/20"
                         />
                       </div>
                     )}
                     
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-2 sm:gap-4">
                       <div className="space-y-2">
-                        <label className="text-white/60 text-sm">Nom</label>
+                        <label className="text-white/60 text-xs sm:text-sm">Nom</label>
                         <div className="relative">
                           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-600/20 rounded-lg blur opacity-50"></div>
-                          <div className="relative bg-black/40 backdrop-blur-xl border border-blue-500/30 rounded-lg p-3">
-                            <span className="text-white/90 font-medium">{article.name}</span>
+                          <div className="relative bg-black/40 backdrop-blur-xl border border-blue-500/30 rounded-lg p-2 sm:p-3">
+                            <span className="text-white/90 font-medium text-xs sm:text-sm break-words">{article.name}</span>
                           </div>
                         </div>
                       </div>
                       
                       <div className="space-y-2">
-                        <label className="text-white/60 text-sm">Marque</label>
+                        <label className="text-white/60 text-xs sm:text-sm">Marque</label>
                         <div className="relative">
                           <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-600/20 rounded-lg blur opacity-50"></div>
-                          <div className="relative bg-black/40 backdrop-blur-xl border border-purple-500/30 rounded-lg p-3">
-                            <span className="text-white/90 font-medium">{article.brand}</span>
+                          <div className="relative bg-black/40 backdrop-blur-xl border border-purple-500/30 rounded-lg p-2 sm:p-3">
+                            <span className="text-white/90 font-medium text-xs sm:text-sm">{article.brand}</span>
                           </div>
                         </div>
                       </div>
                       
                       <div className="space-y-2">
-                        <label className="text-white/60 text-sm">Taille</label>
+                        <label className="text-white/60 text-xs sm:text-sm">Taille</label>
                         <div className="relative">
                           <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-600/20 rounded-lg blur opacity-50"></div>
-                          <div className="relative bg-black/40 backdrop-blur-xl border border-orange-500/30 rounded-lg p-3">
-                            <span className="text-white/90 font-medium">{article.size}</span>
+                          <div className="relative bg-black/40 backdrop-blur-xl border border-orange-500/30 rounded-lg p-2 sm:p-3">
+                            <span className="text-white/90 font-medium text-xs sm:text-sm uppercase">{article.size}</span>
                           </div>
                         </div>
                       </div>
                       
                       <div className="space-y-2">
-                        <label className="text-white/60 text-sm">Prix</label>
+                        <label className="text-white/60 text-xs sm:text-sm">Prix</label>
                         <div className="relative">
                           <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-green-600/20 rounded-lg blur opacity-50"></div>
-                          <div className="relative bg-black/40 backdrop-blur-xl border border-emerald-500/30 rounded-lg p-3">
-                            <span className="text-white/90 font-bold">{article.price}€</span>
+                          <div className="relative bg-black/40 backdrop-blur-xl border border-emerald-500/30 rounded-lg p-2 sm:p-3">
+                            <span className="text-white/90 font-bold text-xs sm:text-sm">{article.price}€</span>
                           </div>
                         </div>
                       </div>
@@ -234,14 +235,15 @@ export default function ArticleDescriptionGenerator({ onBack }: ArticleDescripti
           </div>
 
           {/* Generated Content */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-600/10 rounded-2xl blur"></div>
               <Card className="relative bg-black/40 backdrop-blur-xl border border-white/20">
-                <CardContent className="p-6">
-                  <h2 className="text-xl font-bold text-white/90 mb-4 flex items-center">
+                <CardContent className="p-4 sm:p-6">
+                  <h2 className="text-lg sm:text-xl font-bold text-white/90 mb-4 flex items-center">
                     <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse mr-3"></div>
-                    Contenu généré par IA
+                    <span className="hidden sm:inline">Contenu généré par IA</span>
+                    <span className="sm:hidden">Contenu IA</span>
                   </h2>
                   
                   {isGenerating ? (
@@ -257,20 +259,20 @@ export default function ArticleDescriptionGenerator({ onBack }: ArticleDescripti
                       {/* Titre */}
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                          <label className="text-white/60 text-sm">Titre optimisé</label>
+                          <label className="text-white/60 text-xs sm:text-sm">Titre optimisé</label>
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => copyToClipboard(generatedContent.title, "Titre")}
-                            className="bg-black/40 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30"
+                            className="bg-black/40 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-xs sm:text-sm"
                           >
-                            <Copy className="w-4 h-4" />
+                            <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
                           </Button>
                         </div>
                         <div className="relative">
                           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-lg blur opacity-50"></div>
-                          <div className="relative bg-black/40 backdrop-blur-xl border border-cyan-500/30 rounded-lg p-4">
-                            <p className="text-white/90 font-medium">{generatedContent.title}</p>
+                          <div className="relative bg-black/40 backdrop-blur-xl border border-cyan-500/30 rounded-lg p-3 sm:p-4">
+                            <p className="text-white/90 font-medium text-sm sm:text-base break-words">{generatedContent.title}</p>
                           </div>
                         </div>
                       </div>
@@ -278,71 +280,125 @@ export default function ArticleDescriptionGenerator({ onBack }: ArticleDescripti
                       {/* Description */}
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                          <label className="text-white/60 text-sm">Description détaillée</label>
+                          <label className="text-white/60 text-xs sm:text-sm">Description détaillée</label>
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => copyToClipboard(generatedContent.description, "Description")}
-                            className="bg-black/40 hover:bg-purple-500/20 text-purple-400 border border-purple-500/30"
+                            className="bg-black/40 hover:bg-purple-500/20 text-purple-400 border border-purple-500/30 text-xs sm:text-sm"
                           >
-                            <Copy className="w-4 h-4" />
+                            <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
                           </Button>
                         </div>
                         <div className="relative">
                           <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-600/20 rounded-lg blur opacity-50"></div>
-                          <div className="relative bg-black/40 backdrop-blur-xl border border-purple-500/30 rounded-lg p-4 max-h-64 overflow-y-auto">
-                            <p className="text-white/90 leading-relaxed whitespace-pre-wrap">{generatedContent.description}</p>
+                          <div className="relative bg-black/40 backdrop-blur-xl border border-purple-500/30 rounded-lg p-3 sm:p-4 max-h-48 sm:max-h-64 overflow-y-auto">
+                            <p className="text-white/90 leading-relaxed whitespace-pre-wrap text-sm sm:text-base break-words">{generatedContent.description}</p>
                           </div>
                         </div>
                       </div>
                       
-                      {/* Actions */}
-                      <div className="flex space-x-3 pt-4 border-t border-white/10">
-                        <div className="relative group/action">
-                          <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-600/20 rounded-xl blur opacity-0 group-hover/action:opacity-100 transition-all duration-300"></div>
-                          <Button
-                            onClick={() => article && handleGenerateDescription(article)}
-                            disabled={isGenerating}
-                            className="relative bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white border border-white/20 backdrop-blur-xl"
-                          >
-                            {isGenerating ? (
-                              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                            ) : (
-                              <RotateCcw className="w-4 h-4 mr-2" />
-                            )}
-                            Régénérer
-                          </Button>
+                      {/* Actions Mobile/Desktop */}
+                      <div className="pt-4 border-t border-white/10 space-y-3">
+                        {/* Mobile: Stack vertically */}
+                        <div className="flex flex-col sm:hidden space-y-2">
+                          <div className="relative group/action">
+                            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-600/20 rounded-xl blur opacity-0 group-hover/action:opacity-100 transition-all duration-300"></div>
+                            <Button
+                              onClick={() => article && handleGenerateDescription(article)}
+                              disabled={isGenerating}
+                              className="relative w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white border border-white/20 backdrop-blur-xl text-sm"
+                            >
+                              {isGenerating ? (
+                                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                              ) : (
+                                <RotateCcw className="w-4 h-4 mr-2" />
+                              )}
+                              Régénérer
+                            </Button>
+                          </div>
+                          
+                          <div className="relative group/action">
+                            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-green-600/20 rounded-xl blur opacity-0 group-hover/action:opacity-100 transition-all duration-300"></div>
+                            <Button
+                              onClick={() => copyToClipboard(`${generatedContent.title}\n\n${generatedContent.description}`, "Contenu complet")}
+                              className="relative w-full bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white border border-white/20 backdrop-blur-xl text-sm"
+                            >
+                              <Download className="w-4 h-4 mr-2" />
+                              Tout copier
+                            </Button>
+                          </div>
+                          
+                          <div className="relative group/action">
+                            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-xl blur opacity-0 group-hover/action:opacity-100 transition-all duration-300"></div>
+                            <Button
+                              onClick={() => {
+                                const text = `${generatedContent.title}\n\n${generatedContent.description}`;
+                                if (navigator.share) {
+                                  navigator.share({
+                                    title: "Description générée par IA",
+                                    text: text,
+                                  });
+                                } else {
+                                  copyToClipboard(text, "Contenu");
+                                }
+                              }}
+                              className="relative w-full bg-black/40 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 backdrop-blur-xl text-sm"
+                            >
+                              <Share2 className="w-4 h-4 mr-2" />
+                              Partager
+                            </Button>
+                          </div>
                         </div>
                         
-                        <div className="relative group/action flex-1">
-                          <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-green-600/20 rounded-xl blur opacity-0 group-hover/action:opacity-100 transition-all duration-300"></div>
-                          <Button
-                            onClick={() => copyToClipboard(`${generatedContent.title}\n\n${generatedContent.description}`, "Contenu complet")}
-                            className="relative w-full bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white border border-white/20 backdrop-blur-xl"
-                          >
-                            <Download className="w-4 h-4 mr-2" />
-                            Tout copier
-                          </Button>
-                        </div>
-                        
-                        <div className="relative group/action">
-                          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-xl blur opacity-0 group-hover/action:opacity-100 transition-all duration-300"></div>
-                          <Button
-                            onClick={() => {
-                              const text = `${generatedContent.title}\n\n${generatedContent.description}`;
-                              if (navigator.share) {
-                                navigator.share({
-                                  title: "Description générée par IA",
-                                  text: text,
-                                });
-                              } else {
-                                copyToClipboard(text, "Contenu");
-                              }
-                            }}
-                            className="relative bg-black/40 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 backdrop-blur-xl"
-                          >
-                            <Share2 className="w-4 h-4" />
-                          </Button>
+                        {/* Desktop: Horizontal */}
+                        <div className="hidden sm:flex space-x-3">
+                          <div className="relative group/action">
+                            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-600/20 rounded-xl blur opacity-0 group-hover/action:opacity-100 transition-all duration-300"></div>
+                            <Button
+                              onClick={() => article && handleGenerateDescription(article)}
+                              disabled={isGenerating}
+                              className="relative bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white border border-white/20 backdrop-blur-xl"
+                            >
+                              {isGenerating ? (
+                                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                              ) : (
+                                <RotateCcw className="w-4 h-4 mr-2" />
+                              )}
+                              Régénérer
+                            </Button>
+                          </div>
+                          
+                          <div className="relative group/action flex-1">
+                            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-green-600/20 rounded-xl blur opacity-0 group-hover/action:opacity-100 transition-all duration-300"></div>
+                            <Button
+                              onClick={() => copyToClipboard(`${generatedContent.title}\n\n${generatedContent.description}`, "Contenu complet")}
+                              className="relative w-full bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white border border-white/20 backdrop-blur-xl"
+                            >
+                              <Download className="w-4 h-4 mr-2" />
+                              Tout copier
+                            </Button>
+                          </div>
+                          
+                          <div className="relative group/action">
+                            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-xl blur opacity-0 group-hover/action:opacity-100 transition-all duration-300"></div>
+                            <Button
+                              onClick={() => {
+                                const text = `${generatedContent.title}\n\n${generatedContent.description}`;
+                                if (navigator.share) {
+                                  navigator.share({
+                                    title: "Description générée par IA",
+                                    text: text,
+                                  });
+                                } else {
+                                  copyToClipboard(text, "Contenu");
+                                }
+                              }}
+                              className="relative bg-black/40 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 backdrop-blur-xl"
+                            >
+                              <Share2 className="w-4 h-4" />
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
