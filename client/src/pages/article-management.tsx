@@ -35,13 +35,9 @@ export default function ArticleManagement() {
       formData.append("status", data.status || "non-vendu");
       formData.append("comment", data.comment || "");
       
-      // Always append an empty file field to trigger multer
+      // Only append image if it exists
       if (image) {
         formData.append("image", image);
-      } else {
-        // Create an empty blob for multer to process
-        const emptyBlob = new Blob([''], { type: 'text/plain' });
-        formData.append("image", emptyBlob, "");
       }
       
       // Log FormData contents
