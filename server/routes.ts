@@ -64,6 +64,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // PUT and PATCH for article updates
+  app.put("/api/articles/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updateData = req.body;
+      
+      const article = await storage.updateArticle(id, updateData);
+      if (!article) {
+        return res.status(404).json({ message: "Article non trouvé" });
+      }
+      
+      res.json(article);
+    } catch (error) {
+      res.status(500).json({ message: "Erreur lors de la mise à jour de l'article" });
+    }
+  });
+
   app.patch("/api/articles/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
