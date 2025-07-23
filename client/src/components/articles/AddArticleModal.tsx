@@ -111,12 +111,12 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
                 
                 {/* Section Image */}
-                <div className="space-y-4 sm:space-y-6">
-                  <div className="space-y-3 sm:space-y-4">
-                    <Label className="text-white/80 text-base sm:text-lg font-medium">Image du produit</Label>
+                <div className="space-y-3 sm:space-y-6">
+                  <div className="space-y-2 sm:space-y-3">
+                    <Label className="text-white/80 text-sm sm:text-lg font-medium">Image du produit</Label>
                     <div className="relative group/upload">
-                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-green-600/20 rounded-xl sm:rounded-2xl blur group-hover/upload:blur-none transition-all duration-500"></div>
-                      <div className="relative bg-black/40 backdrop-blur-xl border border-emerald-500/30 rounded-xl sm:rounded-2xl p-4 sm:p-8">
+                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-green-600/20 rounded-lg sm:rounded-2xl blur group-hover/upload:blur-none transition-all duration-500"></div>
+                      <div className="relative bg-black/40 backdrop-blur-xl border border-emerald-500/30 rounded-lg sm:rounded-2xl p-3 sm:p-8">
                         <input
                           type="file"
                           accept="image/*"
@@ -138,13 +138,16 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
                               <p className="text-emerald-400 text-sm">{selectedImage.name}</p>
                             </div>
                           ) : (
-                            <div className="space-y-4">
-                              <div className="w-16 h-16 border-2 border-emerald-500/30 border-dashed rounded-xl flex items-center justify-center">
-                                <Upload className="w-8 h-8 text-emerald-400" />
+                            <div className="space-y-3 sm:space-y-4">
+                              <div className="w-12 h-12 sm:w-16 sm:h-16 border-2 border-emerald-500/30 border-dashed rounded-lg sm:rounded-xl flex items-center justify-center mx-auto">
+                                <Upload className="w-6 h-6 sm:w-8 sm:h-8 text-emerald-400" />
                               </div>
-                              <div>
-                                <p className="text-white/80 font-medium">Cliquez pour scanner une image</p>
-                                <p className="text-white/40 text-sm">PNG, JPG jusqu'à 10MB</p>
+                              <div className="text-center">
+                                <p className="text-white/80 font-medium text-sm sm:text-base">
+                                  <span className="sm:hidden">Scanner image</span>
+                                  <span className="hidden sm:inline">Cliquez pour scanner une image</span>
+                                </p>
+                                <p className="text-white/40 text-xs sm:text-sm">PNG, JPG jusqu'à 10MB</p>
                               </div>
                             </div>
                           )}
@@ -155,9 +158,9 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
                 </div>
 
                 {/* Section Détails */}
-                <div className="space-y-6">
-                  <div className="space-y-4">
-                    <Label htmlFor="name" className="text-white/80 text-lg font-medium">Nom de l'article</Label>
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="space-y-3 sm:space-y-4">
+                    <Label htmlFor="name" className="text-white/80 text-sm sm:text-lg font-medium">Nom de l'article</Label>
                     <div className="relative group/input">
                       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-600/20 rounded-xl blur"></div>
                       <div className="relative bg-black/40 backdrop-blur-xl border border-blue-500/30 rounded-xl">
@@ -174,9 +177,9 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
                     )}
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-4">
-                      <Label htmlFor="brand" className="text-white/80">Marque</Label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    <div className="space-y-2 sm:space-y-4">
+                      <Label htmlFor="brand" className="text-white/80 text-sm sm:text-base">Marque</Label>
                       <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-600/20 rounded-xl blur"></div>
                         <div className="relative bg-black/40 backdrop-blur-xl border border-purple-500/30 rounded-xl">
@@ -193,8 +196,8 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
                       )}
                     </div>
 
-                    <div className="space-y-4">
-                      <Label htmlFor="size" className="text-white/80">Taille</Label>
+                    <div className="space-y-2 sm:space-y-4">
+                      <Label htmlFor="size" className="text-white/80 text-sm sm:text-base">Taille</Label>
                       <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-600/20 rounded-xl blur"></div>
                         <div className="relative bg-black/40 backdrop-blur-xl border border-orange-500/30 rounded-xl">
@@ -212,9 +215,9 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-4">
-                      <Label htmlFor="price" className="text-white/80">Prix (€)</Label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    <div className="space-y-2 sm:space-y-4">
+                      <Label htmlFor="price" className="text-white/80 text-sm sm:text-base">Prix (€)</Label>
                       <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-600/20 rounded-xl blur"></div>
                         <div className="relative bg-black/40 backdrop-blur-xl border border-green-500/30 rounded-xl">
@@ -232,8 +235,8 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
                       )}
                     </div>
 
-                    <div className="space-y-4">
-                      <Label htmlFor="status" className="text-white/80">Statut</Label>
+                    <div className="space-y-2 sm:space-y-4">
+                      <Label htmlFor="status" className="text-white/80 text-sm sm:text-base">Statut</Label>
                       <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-blue-600/20 rounded-xl blur"></div>
                         <div className="relative bg-black/40 backdrop-blur-xl border border-indigo-500/30 rounded-xl">
@@ -252,8 +255,8 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
                     </div>
                   </div>
 
-                  <div className="space-y-4">
-                    <Label htmlFor="comment" className="text-white/80">Commentaires</Label>
+                  <div className="space-y-2 sm:space-y-4">
+                    <Label htmlFor="comment" className="text-white/80 text-sm sm:text-base">Commentaires</Label>
                     <div className="relative">
                       <div className="absolute inset-0 bg-gradient-to-r from-rose-500/20 to-pink-600/20 rounded-xl blur"></div>
                       <div className="relative bg-black/40 backdrop-blur-xl border border-rose-500/30 rounded-xl">
@@ -269,36 +272,44 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
                 </div>
               </div>
 
-              {/* Boutons d'action */}
-              <div className="flex justify-end space-x-4 pt-6 border-t border-white/10">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={onClose}
-                  className="bg-black/40 border-white/20 text-white/80 hover:bg-white/10 px-8 py-3"
-                >
-                  Annuler
-                </Button>
+              {/* Boutons d'action futuristes - Mobile/Desktop */}
+              <div className="flex flex-col items-center space-y-3 sm:space-y-4 lg:flex-row lg:justify-between lg:space-y-0 lg:space-x-6 pt-4 sm:pt-6 border-t border-white/10">
+                <div className="flex items-center space-x-2 sm:space-x-3 text-white/60 text-xs sm:text-sm order-2 lg:order-1">
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+                  <span className="hidden sm:inline">Interface quantique synchronisée</span>
+                  <span className="sm:hidden">Synchronisé</span>
+                </div>
                 
-                <div className="relative group/submit">
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-xl blur opacity-60 group-hover/submit:opacity-80 transition-all duration-500"></div>
+                <div className="flex space-x-3 sm:space-x-4 order-1 lg:order-2">
                   <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="relative bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 text-white px-12 py-3 border border-white/20 backdrop-blur-xl font-medium transition-all duration-500 group-hover/submit:scale-105"
+                    type="button"
+                    variant="outline"
+                    onClick={onClose}
+                    className="bg-black/40 border-white/20 text-white/80 hover:bg-white/10 px-4 sm:px-8 py-2 sm:py-3 rounded-lg sm:rounded-xl text-sm sm:text-base"
                   >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                        Création...
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles className="w-4 h-4 mr-2" />
-                        Créer l'article
-                      </>
-                    )}
+                    Annuler
                   </Button>
+                  
+                  <div className="relative group/submit">
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-lg sm:rounded-xl blur opacity-60 group-hover/submit:opacity-80 transition-all duration-500"></div>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="relative bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 text-white px-4 sm:px-12 py-2 sm:py-3 rounded-lg sm:rounded-xl border border-white/20 backdrop-blur-xl font-medium transition-all duration-500 group-hover/submit:scale-105 text-sm sm:text-base"
+                    >
+                      {isSubmitting ? (
+                        <div className="flex items-center space-x-2 sm:space-x-3">
+                          <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <span className="text-xs sm:text-base">Création...</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center space-x-2 sm:space-x-3">
+                          <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span className="text-xs sm:text-base">Créer l'article</span>
+                        </div>
+                      )}
+                    </Button>
+                  </div>
                 </div>
               </div>
             </form>

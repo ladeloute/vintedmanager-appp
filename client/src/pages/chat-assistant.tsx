@@ -135,20 +135,20 @@ export default function ChatAssistant() {
                   <Button
                     onClick={handleGenerate}
                     disabled={generateMutation.isPending}
-                    className="relative bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white px-12 py-6 rounded-2xl border border-white/20 backdrop-blur-xl font-bold text-lg transition-all duration-500 group-hover/button:scale-105"
+                    className="relative bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white px-6 sm:px-12 py-3 sm:py-6 rounded-xl sm:rounded-2xl border border-white/20 backdrop-blur-xl font-bold text-sm sm:text-lg transition-all duration-500 group-hover/button:scale-105"
                   >
                     {generateMutation.isPending ? (
                       <>
-                        <div className="flex items-center space-x-3">
-                          <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          <span>Analyse neuronale...</span>
+                        <div className="flex items-center space-x-2 sm:space-x-3">
+                          <div className="w-4 h-4 sm:w-6 sm:h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <span className="text-xs sm:text-base">Analyse neuronale...</span>
                         </div>
                       </>
                     ) : (
                       <>
-                        <div className="flex items-center space-x-3">
-                          <MessageCircle className="w-6 h-6" />
-                          <span>GÉNÉRER 3 RÉPONSES IA</span>
+                        <div className="flex items-center space-x-2 sm:space-x-3">
+                          <MessageCircle className="w-4 h-4 sm:w-6 sm:h-6" />
+                          <span className="text-xs sm:text-base">GÉNÉRER 3 RÉPONSES IA</span>
                         </div>
                       </>
                     )}

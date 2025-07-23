@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Plus, Search, ChevronLeft, ChevronRight, Package } from "lucide-react";
+import { Plus, Search, ChevronLeft, ChevronRight, Package, Sparkles, CheckCircle, Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -182,29 +183,31 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
   }
 
   return (
-    <div className="space-y-8 p-6">
+    <div className="space-y-4 sm:space-y-8 p-4 sm:p-6">
       {/* Header Futuriste */}
       <div className="text-center relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-yellow-500/10 rounded-3xl blur-xl"></div>
-        <div className="relative bg-black/20 backdrop-blur-xl border border-white/20 rounded-3xl p-8">
-          <div className="flex items-center justify-center mb-6">
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-yellow-500/10 rounded-2xl sm:rounded-3xl blur-xl"></div>
+        <div className="relative bg-black/20 backdrop-blur-xl border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-8">
+          <div className="flex items-center justify-center mb-4 sm:mb-6">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-600 rounded-2xl blur opacity-60 animate-pulse"></div>
-              <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-2xl p-4">
-                <Package className="w-10 h-10 text-amber-400" />
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-600 rounded-xl sm:rounded-2xl blur opacity-60 animate-pulse"></div>
+              <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-xl sm:rounded-2xl p-3 sm:p-4">
+                <Package className="w-8 h-8 sm:w-10 sm:h-10 text-amber-400" />
               </div>
             </div>
           </div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400 bg-clip-text text-transparent mb-4">
-            Gestionnaire d'Inventaire
+          <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400 bg-clip-text text-transparent mb-2 sm:mb-4">
+            <span className="sm:hidden">Inventaire Futur</span>
+            <span className="hidden sm:inline">Gestionnaire d'Inventaire</span>
           </h1>
-          <p className="text-white/70 max-w-2xl mx-auto">
-            Contrôlez votre stock avec une interface quantique avancée et des outils de gestion intelligents
+          <p className="text-white/70 max-w-2xl mx-auto text-sm sm:text-base">
+            <span className="sm:hidden">Interface quantique avancée</span>
+            <span className="hidden sm:inline">Contrôlez votre stock avec une interface quantique avancée et des outils de gestion intelligents</span>
           </p>
           <div className="flex justify-center space-x-2 mt-4">
-            <div className="w-2 h-2 bg-orange-400 rounded-full animate-ping"></div>
-            <div className="w-2 h-2 bg-amber-400 rounded-full animate-ping" style={{animationDelay: '0.2s'}}></div>
-            <div className="w-2 h-2 bg-yellow-400 rounded-full animate-ping" style={{animationDelay: '0.4s'}}></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-400 rounded-full animate-ping"></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-amber-400 rounded-full animate-ping" style={{animationDelay: '0.2s'}}></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-yellow-400 rounded-full animate-ping" style={{animationDelay: '0.4s'}}></div>
           </div>
         </div>
       </div>
@@ -305,9 +308,11 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
                 </h3>
 
                 <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-orange-600/10 rounded-2xl blur"></div>
-                  <div className="relative bg-black/20 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
-                    <div className="overflow-x-auto">
+                  <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-orange-600/10 rounded-xl sm:rounded-2xl blur"></div>
+                  <div className="relative bg-black/20 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl overflow-hidden">
+                    
+                    {/* Version Desktop - Tableau */}
+                    <div className="hidden lg:block overflow-x-auto">
                       <table className="w-full">
                         <thead>
                           <tr className="border-b border-white/10 bg-black/20">
@@ -350,6 +355,106 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
                           )}
                         </tbody>
                       </table>
+                    </div>
+
+                    {/* Version Mobile - Cards */}
+                    <div className="lg:hidden p-4 space-y-4">
+                      {filteredArticles.length === 0 ? (
+                        <div className="py-12 text-center text-white/60">
+                          <div className="flex flex-col items-center space-y-4">
+                            <div className="w-16 h-16 border-2 border-amber-500/30 rounded-full flex items-center justify-center">
+                              <Package className="w-8 h-8 text-amber-400/50" />
+                            </div>
+                            <div>
+                              {articles.length === 0 ? 
+                                "Base de données vide. Initialisez votre premier article !" : 
+                                "Aucun article ne correspond aux paramètres quantiques."}
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        filteredArticles.map((article) => (
+                          <div key={article.id} className="relative group/card">
+                            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-orange-600/10 rounded-xl blur-sm"></div>
+                            <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-xl p-4">
+                              <div className="flex items-start space-x-3">
+                                {/* Image */}
+                                <div className="flex-shrink-0">
+                                  {article.imageUrl ? (
+                                    <img
+                                      src={article.imageUrl}
+                                      alt={article.name}
+                                      className="w-12 h-12 object-cover rounded-lg border border-white/20"
+                                    />
+                                  ) : (
+                                    <div className="w-12 h-12 bg-amber-500/20 border border-amber-500/30 rounded-lg flex items-center justify-center">
+                                      <Package className="w-6 h-6 text-amber-400" />
+                                    </div>
+                                  )}
+                                </div>
+                                
+                                {/* Contenu */}
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center justify-between mb-2">
+                                    <h3 className="text-white font-medium text-sm truncate">{article.name}</h3>
+                                    <Badge className={`text-xs ${
+                                      article.status === "vendu" ? "bg-emerald-500/80 text-white" :
+                                      article.status === "en-attente" ? "bg-amber-500/80 text-white" :
+                                      "bg-blue-500/80 text-white"
+                                    }`}>
+                                      {article.status === "vendu" ? "Vendu" :
+                                       article.status === "en-attente" ? "En attente" : "Non vendu"}
+                                    </Badge>
+                                  </div>
+                                  
+                                  <div className="grid grid-cols-2 gap-2 text-xs text-white/60 mb-3">
+                                    <div>Marque: <span className="text-white/80">{article.brand}</span></div>
+                                    <div>Taille: <span className="text-white/80">{article.size}</span></div>
+                                    <div>Prix: <span className="text-amber-400 font-medium">{article.price}€</span></div>
+                                  </div>
+                                  
+                                  {/* Actions mobiles */}
+                                  <div className="flex items-center space-x-2">
+                                    <Button
+                                      onClick={() => onGenerateDescription(article)}
+                                      size="sm"
+                                      className="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 border border-cyan-500/30 text-xs px-2 py-1 h-auto"
+                                    >
+                                      <Sparkles className="w-3 h-3" />
+                                    </Button>
+                                    
+                                    {article.status !== "vendu" && (
+                                      <Button
+                                        onClick={() => onMarkAsSold(article.id)}
+                                        size="sm"
+                                        className="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30 text-xs px-2 py-1 h-auto"
+                                      >
+                                        <CheckCircle className="w-3 h-3" />
+                                      </Button>
+                                    )}
+                                    
+                                    <Button
+                                      onClick={() => onEdit(article)}
+                                      size="sm"
+                                      className="bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 border border-blue-500/30 text-xs px-2 py-1 h-auto"
+                                    >
+                                      <Edit className="w-3 h-3" />
+                                    </Button>
+                                    
+                                    <Button
+                                      onClick={() => onDelete(article.id)}
+                                      size="sm"
+                                      className="bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30 text-xs px-2 py-1 h-auto"
+                                    >
+                                      <Trash2 className="w-3 h-3" />
+                                    </Button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      )}
                     </div>
                   </div>
                 </div>
