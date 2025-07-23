@@ -11,7 +11,11 @@ import ArticleCard from "@/components/articles/ArticleCard";
 import AddArticleModal from "@/components/articles/AddArticleModal";
 import { createArticle, deleteArticle, updateArticle, type Article } from "@/lib/api";
 
-export default function ArticleManagement() {
+interface ArticleManagementProps {
+  onNavigateToDescriptionGenerator?: () => void;
+}
+
+export default function ArticleManagement({ onNavigateToDescriptionGenerator }: ArticleManagementProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [brandFilter, setBrandFilter] = useState("");
@@ -141,24 +145,16 @@ export default function ArticleManagement() {
       return;
     }
 
-    try {
-      // Simuler la génération pour les articles existants
+    // Stocker l'article dans sessionStorage pour la page de génération
+    sessionStorage.setItem("selectedArticle", JSON.stringify(article));
+    
+    // Naviguer vers la page de génération
+    if (onNavigateToDescriptionGenerator) {
+      onNavigateToDescriptionGenerator();
+    } else {
       toast({
-        title: "Génération en cours...",
-        description: "L'IA analyse l'article et génère une description optimisée",
-      });
-
-      // Pour l'instant, on simule mais on pourrait appeler l'API avec les données de l'article
-      setTimeout(() => {
-        toast({
-          title: "Description générée !",
-          description: "La description IA a été créée avec succès",
-        });
-      }, 2000);
-    } catch (error) {
-      toast({
-        title: "Erreur",
-        description: "Erreur lors de la génération de la description",
+        title: "Navigation non disponible",
+        description: "Impossible d'ouvrir la page de génération",
         variant: "destructive",
       });
     }
