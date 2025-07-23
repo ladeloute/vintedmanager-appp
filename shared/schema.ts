@@ -32,16 +32,13 @@ export const conversations = pgTable("conversations", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const insertArticleSchema = createInsertSchema(articles).pick({
-  name: true,
-  brand: true,
-  size: true,
-  price: true,
-  status: true,
-  comment: true,
-}).extend({
+export const insertArticleSchema = z.object({
+  name: z.string().min(1, "Le nom est requis"),
+  brand: z.string().min(1, "La marque est requise"), 
+  size: z.string().min(1, "La taille est requise"),
   price: z.string().min(1, "Le prix est requis"),
-  comment: z.string().optional(),
+  status: z.enum(["vendu", "non-vendu", "en-attente"]).default("non-vendu"),
+  comment: z.string().optional().or(z.literal("")),
 });
 
 export const insertSaleSchema = createInsertSchema(sales).pick({

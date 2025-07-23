@@ -24,15 +24,26 @@ export default function ArticleManagement() {
 
   const createMutation = useMutation({
     mutationFn: async ({ data, image }: { data: any; image?: File }) => {
+      console.log("Frontend data before FormData:", data);
       const formData = new FormData();
-      Object.keys(data).forEach(key => {
-        if (data[key] !== undefined && data[key] !== "") {
-          formData.append(key, data[key]);
-        }
-      });
+      
+      // Always add all required fields, even if empty
+      formData.append("name", data.name || "");
+      formData.append("brand", data.brand || "");
+      formData.append("size", data.size || "");
+      formData.append("price", data.price || "");
+      formData.append("status", data.status || "non-vendu");
+      formData.append("comment", data.comment || "");
+      
       if (image) {
         formData.append("image", image);
       }
+      
+      // Log FormData contents
+      for (const [key, value] of formData.entries()) {
+        console.log(`FormData ${key}:`, value);
+      }
+      
       return createArticle(formData);
     },
     onSuccess: () => {

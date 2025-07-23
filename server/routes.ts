@@ -27,7 +27,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log("Received body:", req.body);
       console.log("Received file:", req.file ? req.file.filename : "no file");
       
-      const validatedData = insertArticleSchema.parse(req.body);
+      // Clean the data before validation
+      const cleanData = {
+        name: req.body.name || "",
+        brand: req.body.brand || "",
+        size: req.body.size || "",
+        price: req.body.price || "",
+        status: req.body.status || "non-vendu",
+        comment: req.body.comment || ""
+      };
+      
+      console.log("Clean data:", cleanData);
+      
+      const validatedData = insertArticleSchema.parse(cleanData);
       
       // Add image URL if file was uploaded
       const articleData = {
