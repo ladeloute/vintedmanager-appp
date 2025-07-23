@@ -66,29 +66,31 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl bg-transparent border-0 p-0">
+      <DialogContent className="max-w-xs sm:max-w-4xl bg-transparent border-0 p-0 mx-4 sm:mx-auto">
         <div className="relative">
           {/* Effets de fond futuristes */}
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-600/10 to-pink-500/10 rounded-3xl blur-xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-600/10 to-pink-500/10 rounded-2xl sm:rounded-3xl blur-xl"></div>
           
           {/* Conteneur principal */}
-          <div className="relative bg-black/60 backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden">
+          <div className="relative bg-black/60 backdrop-blur-2xl border border-white/20 rounded-2xl sm:rounded-3xl overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(14,165,233,0.1),transparent)] opacity-50"></div>
             
-            <DialogHeader className="relative z-10 p-8 pb-0">
+            <DialogHeader className="relative z-10 p-4 sm:p-8 pb-0">
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2 sm:space-x-4">
                   <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl blur opacity-60 animate-pulse"></div>
-                    <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-xl p-3">
-                      <Sparkles className="w-8 h-8 text-cyan-400" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-lg sm:rounded-xl blur opacity-60 animate-pulse"></div>
+                    <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-lg sm:rounded-xl p-2 sm:p-3">
+                      <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-cyan-400" />
                     </div>
                   </div>
                   <div>
-                    <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                      Créer un Nouvel Article
+                    <DialogTitle className="text-lg sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                      <span className="sm:hidden">Nouvel Article</span>
+                      <span className="hidden sm:inline">Créer un Nouvel Article</span>
                     </DialogTitle>
-                    <p className="text-white/60 mt-2">Ajoutez un article à votre inventaire quantique</p>
+                    <p className="text-white/60 mt-1 sm:mt-2 text-xs sm:text-base hidden sm:block">Ajoutez un article à votre inventaire quantique</p>
+                    <p className="text-white/60 mt-1 text-xs sm:hidden">Inventaire quantique</p>
                   </div>
                 </div>
                 
@@ -96,23 +98,26 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
                   variant="ghost"
                   size="sm"
                   onClick={onClose}
-                  className="bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30 rounded-xl"
+                  className="bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30 rounded-xl p-2"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
               </div>
             </DialogHeader>
 
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="relative z-10 p-8 space-y-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="relative z-10 p-4 sm:p-8 space-y-4 sm:space-y-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
                 
-                {/* Section Image */}
-                <div className="space-y-6">
-                  <div className="space-y-4">
-                    <Label className="text-white/80 text-lg font-medium">Image du produit</Label>
+                {/* Section Image - Mobile/Desktop */}
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="space-y-3 sm:space-y-4">
+                    <Label className="text-white/80 text-base sm:text-lg font-medium">
+                      <span className="sm:hidden">Image</span>
+                      <span className="hidden sm:inline">Image du produit</span>
+                    </Label>
                     <div className="relative group/upload">
-                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-green-600/20 rounded-2xl blur group-hover/upload:blur-none transition-all duration-500"></div>
-                      <div className="relative bg-black/40 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-8">
+                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-green-600/20 rounded-xl sm:rounded-2xl blur group-hover/upload:blur-none transition-all duration-500"></div>
+                      <div className="relative bg-black/40 backdrop-blur-xl border border-emerald-500/30 rounded-xl sm:rounded-2xl p-4 sm:p-8">
                         <input
                           type="file"
                           accept="image/*"

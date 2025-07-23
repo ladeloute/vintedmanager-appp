@@ -182,29 +182,31 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
   }
 
   return (
-    <div className="space-y-8 p-6">
-      {/* Header Futuriste */}
+    <div className="space-y-4 sm:space-y-8 p-4 sm:p-6">
+      {/* Header Futuriste - Mobile/Desktop */}
       <div className="text-center relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-yellow-500/10 rounded-3xl blur-xl"></div>
-        <div className="relative bg-black/20 backdrop-blur-xl border border-white/20 rounded-3xl p-8">
-          <div className="flex items-center justify-center mb-6">
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-yellow-500/10 rounded-2xl sm:rounded-3xl blur-xl"></div>
+        <div className="relative bg-black/20 backdrop-blur-xl border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-8">
+          <div className="flex items-center justify-center mb-4 sm:mb-6">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-600 rounded-2xl blur opacity-60 animate-pulse"></div>
-              <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-2xl p-4">
-                <Package className="w-10 h-10 text-amber-400" />
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-600 rounded-xl sm:rounded-2xl blur opacity-60 animate-pulse"></div>
+              <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-xl sm:rounded-2xl p-3 sm:p-4">
+                <Package className="w-8 h-8 sm:w-10 sm:h-10 text-amber-400" />
               </div>
             </div>
           </div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400 bg-clip-text text-transparent mb-4">
-            Gestionnaire d'Inventaire
+          <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400 bg-clip-text text-transparent mb-2 sm:mb-4">
+            <span className="sm:hidden">Inventaire</span>
+            <span className="hidden sm:inline">Gestionnaire d'Inventaire</span>
           </h1>
-          <p className="text-white/70 max-w-2xl mx-auto">
-            Contrôlez votre stock avec une interface quantique avancée et des outils de gestion intelligents
+          <p className="text-white/70 max-w-2xl mx-auto text-sm sm:text-base">
+            <span className="sm:hidden">Interface quantique de gestion d'articles</span>
+            <span className="hidden sm:inline">Contrôlez votre stock avec une interface quantique avancée et des outils de gestion intelligents</span>
           </p>
           <div className="flex justify-center space-x-2 mt-4">
-            <div className="w-2 h-2 bg-orange-400 rounded-full animate-ping"></div>
-            <div className="w-2 h-2 bg-amber-400 rounded-full animate-ping" style={{animationDelay: '0.2s'}}></div>
-            <div className="w-2 h-2 bg-yellow-400 rounded-full animate-ping" style={{animationDelay: '0.4s'}}></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-400 rounded-full animate-ping"></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-amber-400 rounded-full animate-ping" style={{animationDelay: '0.2s'}}></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-yellow-400 rounded-full animate-ping" style={{animationDelay: '0.4s'}}></div>
           </div>
         </div>
       </div>
@@ -212,37 +214,44 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
       {/* Interface Principale */}
       <div className="relative group">
         <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 via-amber-500/20 to-yellow-500/20 rounded-3xl blur-xl opacity-50 group-hover:opacity-70 transition-all duration-700"></div>
-        <Card className="relative bg-black/40 backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden">
-          <CardContent className="p-8">
+        <Card className="relative bg-black/40 backdrop-blur-2xl border border-white/20 rounded-2xl sm:rounded-3xl overflow-hidden">
+          <CardContent className="p-4 sm:p-8">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(245,158,11,0.1),transparent)]"></div>
-            <div className="relative z-10 space-y-8">
+            <div className="relative z-10 space-y-4 sm:space-y-8">
 
-              {/* En-tête avec bouton d'ajout */}
-              <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center space-y-4 lg:space-y-0">
-                <div className="flex items-center space-x-4">
+              {/* En-tête avec bouton d'ajout - Mobile/Desktop */}
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+                <div className="flex items-center space-x-3 sm:space-x-4">
                   <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
-                  <h2 className="text-2xl font-bold text-white/90">Base de données quantique</h2>
+                  <h2 className="text-lg sm:text-2xl font-bold text-white/90">
+                    <span className="sm:hidden">Base quantique</span>
+                    <span className="hidden sm:inline">Base de données quantique</span>
+                  </h2>
                 </div>
-                <div className="relative group/add">
+                <div className="relative group/add w-full sm:w-auto">
                   <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl blur opacity-60 group-hover/add:opacity-80 transition-all duration-500"></div>
                   <Button
                     onClick={() => setIsModalOpen(true)}
-                    className="relative bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white px-6 py-3 rounded-xl border border-white/20 backdrop-blur-xl font-medium transition-all duration-500 group-hover/add:scale-105"
+                    className="relative w-full sm:w-auto bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl border border-white/20 backdrop-blur-xl font-medium transition-all duration-500 group-hover/add:scale-105 text-sm sm:text-base"
                   >
-                    <Plus className="w-5 h-5 mr-2" />
-                    Ajouter un article
+                    <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                    <span className="sm:hidden">Ajouter</span>
+                    <span className="hidden sm:inline">Ajouter un article</span>
                   </Button>
                 </div>
               </div>
 
-              {/* Panneau de contrôle quantique */}
-              <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                <div className="lg:col-span-2 space-y-2">
-                  <Label className="text-white/80">Scanner d'articles</Label>
+              {/* Panneau de contrôle quantique - Mobile/Desktop */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+                <div className="sm:col-span-2 space-y-2">
+                  <Label className="text-white/80 text-sm sm:text-base">
+                    <span className="sm:hidden">Recherche</span>
+                    <span className="hidden sm:inline">Scanner d'articles</span>
+                  </Label>
                   <div className="relative group/search">
-                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-xl blur"></div>
-                    <div className="relative bg-black/40 backdrop-blur-xl border border-cyan-500/30 rounded-xl">
-                      <Search className="w-5 h-5 absolute left-4 top-4 text-cyan-400" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-lg sm:rounded-xl blur"></div>
+                    <div className="relative bg-black/40 backdrop-blur-xl border border-cyan-500/30 rounded-lg sm:rounded-xl">
+                      <Search className="w-4 h-4 sm:w-5 sm:h-5 absolute left-3 sm:left-4 top-3 sm:top-4 text-cyan-400" />
                       <Input
                         placeholder="Rechercher dans la base..."
                         value={searchTerm}
