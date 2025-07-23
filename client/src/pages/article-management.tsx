@@ -416,7 +416,7 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
                                   {/* Actions mobiles */}
                                   <div className="flex items-center space-x-2">
                                     <Button
-                                      onClick={() => onGenerateDescription(article)}
+                                      onClick={() => handleGenerateDescription(article)}
                                       size="sm"
                                       className="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 border border-cyan-500/30 text-xs px-2 py-1 h-auto"
                                     >
@@ -425,7 +425,7 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
                                     
                                     {article.status !== "vendu" && (
                                       <Button
-                                        onClick={() => onMarkAsSold(article.id)}
+                                        onClick={() => handleMarkAsSold(article.id)}
                                         size="sm"
                                         className="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30 text-xs px-2 py-1 h-auto"
                                       >
@@ -434,7 +434,7 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
                                     )}
                                     
                                     <Button
-                                      onClick={() => onEdit(article)}
+                                      onClick={() => handleEditArticle(article)}
                                       size="sm"
                                       className="bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 border border-blue-500/30 text-xs px-2 py-1 h-auto"
                                     >
@@ -442,7 +442,7 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
                                     </Button>
                                     
                                     <Button
-                                      onClick={() => onDelete(article.id)}
+                                      onClick={() => handleDeleteArticle(article.id)}
                                       size="sm"
                                       className="bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30 text-xs px-2 py-1 h-auto"
                                     >
