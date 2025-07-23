@@ -68,14 +68,26 @@ app.use((req, res, next) => {
   }, () => {
     log(`serving on port ${port}`);
     
-    // Démarrer le keep-alive en développement
-    if (process.env.NODE_ENV === "development") {
-      // Auto-ping toutes les 5 minutes pour garder l'app active
-      setInterval(() => {
-        fetch(`http://localhost:${port}/ping`)
-          .then(() => console.log('Keep-alive ping sent'))
-          .catch(() => console.log('Keep-alive ping failed'));
-      }, 5 * 60 * 1000); // 5 minutes
-    }
+    // Démarrer le keep-alive automatique
+    const REPL_URL = 'https://e8c39cc9-cf2c-4307-b459-339a185d3aa2-00-2fom0j0gq2vvu.picard.repl.co';
+    
+    // Auto-ping toutes les 3 minutes pour maintenir l'app active
+    setInterval(() => {
+      fetch(`${REPL_URL}/ping`)
+        .then(res => {
+          if (res.ok) {
+            console.log(`Keep-alive: App active at ${new Date().toLocaleTimeString()}`);
+          }
+        })
+        .catch(() => {
+          console.log('Keep-alive: Retrying in 30s...');
+          // Retry after 30 seconds
+          setTimeout(() => {
+            fetch(`${REPL_URL}/ping`).catch(() => {});
+          }, 30000);
+        });
+    }, 3 * 60 * 1000); // 3 minutes
+    
+    console.log(`🚀 VintedManager active 24h/24 sur: ${REPL_URL}`);
   });
 })();
