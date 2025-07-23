@@ -132,37 +132,35 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="space-y-4 sm:space-y-8 p-4 sm:p-6">
-      {/* Header avec particules quantiques - Mobile/Desktop */}
+    <div className="space-y-8 p-6">
+      {/* Header avec particules quantiques */}
       <div className="text-center relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl sm:rounded-3xl blur-xl"></div>
-        <div className="relative bg-black/20 backdrop-blur-xl border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-8">
-          <div className="flex items-center justify-center mb-4 sm:mb-6">
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-xl"></div>
+        <div className="relative bg-black/20 backdrop-blur-xl border border-white/20 rounded-3xl p-8">
+          <div className="flex items-center justify-center mb-6">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl sm:rounded-2xl blur opacity-60 animate-pulse"></div>
-              <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-xl sm:rounded-2xl p-3 sm:p-4">
-                <BarChart3 className="w-8 h-8 sm:w-10 sm:h-10 text-cyan-400" />
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl blur opacity-60 animate-pulse"></div>
+              <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-2xl p-4">
+                <BarChart3 className="w-10 h-10 text-cyan-400" />
               </div>
             </div>
           </div>
-          <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-2 sm:mb-4">
-            <span className="sm:hidden">Tableau Quantique</span>
-            <span className="hidden sm:inline">Tableau de Bord Quantique</span>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+            Tableau de Bord Quantique
           </h1>
-          <p className="text-white/70 max-w-2xl mx-auto text-sm sm:text-base">
-            <span className="sm:hidden">Performances de vente avec IA</span>
-            <span className="hidden sm:inline">Surveillez vos performances de vente avec une intelligence artificielle avancée</span>
+          <p className="text-white/70 max-w-2xl mx-auto">
+            Surveillez vos performances de vente avec une intelligence artificielle avancée
           </p>
           <div className="flex justify-center space-x-2 mt-4">
-            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-cyan-400 rounded-full animate-ping"></div>
-            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-400 rounded-full animate-ping" style={{animationDelay: '0.2s'}}></div>
-            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-pink-400 rounded-full animate-ping" style={{animationDelay: '0.4s'}}></div>
+            <div className="w-2 h-2 bg-cyan-400 rounded-full animate-ping"></div>
+            <div className="w-2 h-2 bg-purple-400 rounded-full animate-ping" style={{animationDelay: '0.2s'}}></div>
+            <div className="w-2 h-2 bg-pink-400 rounded-full animate-ping" style={{animationDelay: '0.4s'}}></div>
           </div>
         </div>
       </div>
 
-      {/* Holographic Performance Cards - Mobile/Desktop */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 mb-8 sm:mb-12">
+      {/* Holographic Performance Cards */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
         {performanceCards.map((card, index) => (
           <div key={index} className="group relative">
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition-all duration-500 animate-pulse"></div>

@@ -60,9 +60,7 @@ export default function ArticleCard({ article, onEdit, onDelete, onGenerateDescr
   };
 
   return (
-    <>
-      {/* Desktop Table Row */}
-      <tr className="hidden sm:table-row border-b border-white/10 hover:bg-white/5 transition-all duration-300 group">
+    <tr className="border-b border-white/10 hover:bg-white/5 transition-all duration-300 group">
         <td className="py-6 px-6">
           <div className="relative group/image">
             {article.imageUrl ? (
@@ -185,95 +183,5 @@ export default function ArticleCard({ article, onEdit, onDelete, onGenerateDescr
         </div>
       </td>
     </tr>
-
-    {/* Mobile Card Layout */}
-    <tr className="sm:hidden">
-      <td colSpan={7} className="p-0">
-        <div className="relative group m-2">
-          <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-purple-500/10 to-pink-500/10 rounded-xl blur"></div>
-          <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-xl p-4">
-            <div className="flex items-start space-x-3">
-              {/* Image Mobile */}
-              <div className="relative group/image flex-shrink-0">
-                {article.imageUrl ? (
-                  <>
-                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-600/20 rounded-lg blur opacity-0 group-hover/image:opacity-100 transition-all duration-300"></div>
-                    <img
-                      src={article.imageUrl}
-                      alt={article.name}
-                      className="relative w-12 h-12 object-cover rounded-lg border border-white/20"
-                    />
-                  </>
-                ) : (
-                  <div className="w-12 h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded-lg flex items-center justify-center border border-white/20">
-                    <Package className="w-6 h-6 text-white/60" />
-                  </div>
-                )}
-              </div>
-
-              {/* Content Mobile */}
-              <div className="flex-1 min-w-0 space-y-2">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-white/90 font-medium text-sm truncate">{article.name}</h3>
-                    <p className="text-white/60 text-xs">{article.brand} • {article.size}</p>
-                  </div>
-                  <div className="text-right ml-2">
-                    <div className="text-emerald-400 font-bold text-sm">{article.price}€</div>
-                    <Badge className={`text-xs ${getStatusColor(article.status)}`}>
-                      <span className="flex items-center space-x-1">
-                        {getStatusIcon(article.status)}
-                        <span>{getStatusLabel(article.status)}</span>
-                      </span>
-                    </Badge>
-                  </div>
-                </div>
-
-                {/* Actions Mobile */}
-                <div className="flex space-x-2">
-                  <Button
-                    onClick={() => onGenerateDescription(article)}
-                    size="sm"
-                    className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white border border-white/20 text-xs"
-                  >
-                    <Sparkles className="w-3 h-3 mr-1" />
-                    IA
-                  </Button>
-                  
-                  {article.status !== "vendu" && (
-                    <Button
-                      onClick={() => onMarkAsSold(article.id)}
-                      size="sm"
-                      className="bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white border border-white/20 text-xs"
-                    >
-                      <CheckCircle className="w-3 h-3" />
-                    </Button>
-                  )}
-                  
-                  <Button
-                    onClick={() => onEdit(article)}
-                    size="sm"
-                    variant="outline"
-                    className="bg-black/40 border-white/20 text-white/70 hover:text-white hover:bg-white/10 text-xs"
-                  >
-                    <Edit className="w-3 h-3" />
-                  </Button>
-                  
-                  <Button
-                    onClick={() => onDelete(article.id)}
-                    size="sm"
-                    variant="outline"
-                    className="bg-red-500/20 border-red-500/30 text-red-400 hover:bg-red-500/30 text-xs"
-                  >
-                    <Trash2 className="w-3 h-3" />
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </td>
-    </tr>
-    </>
   );
 }
