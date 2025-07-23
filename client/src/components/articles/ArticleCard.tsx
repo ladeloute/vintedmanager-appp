@@ -1,4 +1,4 @@
-import { Edit, Trash2, Sparkles } from "lucide-react";
+import { Edit, Trash2, Sparkles, CheckCircle, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
@@ -22,9 +22,10 @@ interface ArticleCardProps {
   onEdit: (article: Article) => void;
   onDelete: (id: number) => void;
   onGenerateDescription: (article: Article) => void;
+  onMarkAsSold: (id: number) => void;
 }
 
-export default function ArticleCard({ article, onEdit, onDelete, onGenerateDescription }: ArticleCardProps) {
+export default function ArticleCard({ article, onEdit, onDelete, onGenerateDescription, onMarkAsSold }: ArticleCardProps) {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "vendu":
@@ -80,6 +81,17 @@ export default function ArticleCard({ article, onEdit, onDelete, onGenerateDescr
       </td>
       <td className="py-4 px-4">
         <div className="flex space-x-2">
+          {article.status !== "vendu" && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onMarkAsSold(article.id)}
+              className="text-green-600 hover:text-green-700"
+              title="Marquer comme vendu"
+            >
+              <CheckCircle className="w-4 h-4" />
+            </Button>
+          )}
           <Button
             variant="ghost"
             size="sm"

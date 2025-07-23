@@ -21,9 +21,11 @@ export interface Article {
 }
 
 export interface DashboardStats {
+  totalArticles: number;
   monthlyItemsSold: number;
   monthlyRevenue: string;
   totalItemsSold: number;
+  totalRevenue: string;
   averageCoefficient: string;
 }
 

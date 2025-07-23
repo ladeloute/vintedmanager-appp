@@ -60,8 +60,10 @@ export type Conversation = typeof conversations.$inferSelect;
 
 // Dashboard stats type
 export interface DashboardStats {
+  totalArticles: number;
   monthlyItemsSold: number;
   monthlyRevenue: string;
   totalItemsSold: number;
+  totalRevenue: string;
   averageCoefficient: string;
 }

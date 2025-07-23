@@ -125,3 +125,24 @@ The server uses **Express.js** with TypeScript in ESM format:
 - **Build Optimization**: Separate client and server builds
 
 The application is designed to be scalable and maintainable, with clear separation of concerns, type safety throughout, and modern development practices. The architecture supports both development and production environments with appropriate tooling for each stage.
+
+## Recent Changes (January 2025)
+
+### Dashboard Statistics Integration
+- **Real-time Statistics**: Dashboard now displays live data from the articles database
+- **Comprehensive Metrics**: Shows total articles, monthly/total sold items, monthly/total revenue, and average price
+- **Auto-refresh**: Dashboard stats refresh every 30 seconds and update automatically on article changes
+- **Status Management**: Added "Mark as Sold" functionality directly from article management
+- **Cache Synchronization**: All article operations (create, update, delete, sell) automatically refresh dashboard stats
+
+### Enhanced Article Management
+- **Quick Status Updates**: One-click button to mark articles as sold
+- **Visual Status Indicators**: Color-coded badges for sold/unsold/pending status
+- **Improved Data Flow**: FormData handling fixed for reliable article creation with images
+- **Real-time Updates**: Article changes immediately reflect in dashboard statistics
+
+### Data Architecture Improvements
+- **Unified Statistics**: All dashboard metrics calculated from articles table using SQL aggregations
+- **Monthly Tracking**: Smart monthly calculations based on article update timestamps
+- **Revenue Calculations**: Automatic price aggregation for sold items
+- **Type Safety**: Enhanced TypeScript interfaces for dashboard statistics

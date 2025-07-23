@@ -41,14 +41,17 @@ export default function ArticleManagement() {
       }
       
       // Log FormData contents
-      for (const [key, value] of formData.entries()) {
+      console.log("FormData entries:");
+      const entries = Array.from(formData.entries());
+      entries.forEach(([key, value]) => {
         console.log(`FormData ${key}:`, value);
-      }
+      });
       
       return createArticle(formData);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/articles"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/dashboard-stats"] });
       toast({
         title: "Article créé",
         description: "L'article a été ajouté avec succès",
@@ -67,6 +70,7 @@ export default function ArticleManagement() {
     mutationFn: deleteArticle,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/articles"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/dashboard-stats"] });
       toast({
         title: "Article supprimé",
         description: "L'article a été supprimé avec succès",
@@ -81,8 +85,35 @@ export default function ArticleManagement() {
     },
   });
 
+  const updateMutation = useMutation({
+    mutationFn: async ({ id, data }: { id: number; data: Partial<Article> }) => {
+      return updateArticle(id, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/articles"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/dashboard-stats"] });
+      toast({
+        title: "Article mis à jour",
+        description: "L'article a été mis à jour avec succès",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Erreur",
+        description: error instanceof Error ? error.message : "Erreur lors de la mise à jour",
+        variant: "destructive",
+      });
+    },
+  });
+
   const handleCreateArticle = async (data: any, image?: File) => {
     await createMutation.mutateAsync({ data, image });
+  };
+
+  const handleMarkAsSold = async (id: number) => {
+    if (confirm("Marquer cet article comme vendu ?")) {
+      await updateMutation.mutateAsync({ id, data: { status: "vendu" } });
+    }
   };
 
   const handleDeleteArticle = (id: number) => {
@@ -219,6 +250,7 @@ export default function ArticleManagement() {
                       onEdit={handleEditArticle}
                       onDelete={handleDeleteArticle}
                       onGenerateDescription={handleGenerateDescription}
+                      onMarkAsSold={handleMarkAsSold}
                     />
                   ))
                 )}

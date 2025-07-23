@@ -7,12 +7,13 @@ import type { DashboardStats } from "@/lib/api";
 export default function Dashboard() {
   const { data: stats, isLoading } = useQuery<DashboardStats>({
     queryKey: ["/api/dashboard-stats"],
+    refetchInterval: 30000, // Refresh every 30 seconds
   });
 
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(4)].map((_, i) => (
             <Card key={i} className="animate-pulse">
               <CardContent className="p-6">
@@ -27,32 +28,46 @@ export default function Dashboard() {
 
   const statsCards = [
     {
+      title: "Total articles",
+      value: stats?.totalArticles || 0,
+      icon: Package,
+      color: "border-l-4 border-blue-500",
+      textColor: "text-blue-600",
+    },
+    {
       title: "Articles vendus ce mois",
       value: stats?.monthlyItemsSold || 0,
       icon: TrendingUp,
-      color: "border-l-4 border-success",
-      textColor: "text-success",
+      color: "border-l-4 border-green-500",
+      textColor: "text-green-600",
     },
     {
       title: "Revenus ce mois",
       value: `${stats?.monthlyRevenue || 0}€`,
       icon: Euro,
-      color: "border-l-4 border-accent",
-      textColor: "text-accent",
+      color: "border-l-4 border-orange-500",
+      textColor: "text-orange-600",
+    },
+    {
+      title: "Revenus totaux",
+      value: `${stats?.totalRevenue || 0}€`,
+      icon: Euro,
+      color: "border-l-4 border-purple-500",
+      textColor: "text-purple-600",
     },
     {
       title: "Total articles vendus",
       value: stats?.totalItemsSold || 0,
-      icon: Package,
-      color: "border-l-4 border-primary",
-      textColor: "text-primary",
+      icon: CheckCircle,
+      color: "border-l-4 border-emerald-500",
+      textColor: "text-emerald-600",
     },
     {
-      title: "Coefficient moyen",
-      value: `${stats?.averageCoefficient || 0}x`,
+      title: "Prix moyen",
+      value: `${stats?.averageCoefficient || 0}€`,
       icon: BarChart3,
-      color: "border-l-4 border-secondary",
-      textColor: "text-secondary",
+      color: "border-l-4 border-indigo-500",
+      textColor: "text-indigo-600",
     },
   ];
 

@@ -108,28 +108,60 @@ export class DatabaseStorage implements IStorage {
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
-    // Monthly stats
-    const monthlyStats = await db
-      .select({
-        count: count(),
-        revenue: sum(sales.salePrice)
-      })
-      .from(sales)
-      .where(gte(sales.saleDate, startOfMonth));
+    // Get total articles count
+    const [totalArticles] = await db
+      .select({ count: count() })
+      .from(articles);
 
-    // Total stats
-    const totalStats = await db
-      .select({
-        count: count(),
-        avgCoefficient: avg(sales.coefficient)
+    // Get articles sold this month (by status change)
+    const [monthlySoldArticles] = await db
+      .select({ count: count() })
+      .from(articles)
+      .where(and(
+        eq(articles.status, "vendu"),
+        gte(articles.updatedAt, startOfMonth)
+      ));
+
+    // Get total sold articles
+    const [totalSoldArticles] = await db
+      .select({ count: count() })
+      .from(articles)
+      .where(eq(articles.status, "vendu"));
+
+    // Get monthly revenue from sold articles this month
+    const [monthlyRevenue] = await db
+      .select({ 
+        revenue: sum(sql`CAST(${articles.price} AS DECIMAL)`)
       })
-      .from(sales);
+      .from(articles)
+      .where(and(
+        eq(articles.status, "vendu"),
+        gte(articles.updatedAt, startOfMonth)
+      ));
+
+    // Get total revenue from all sold articles
+    const [totalRevenue] = await db
+      .select({ 
+        revenue: sum(sql`CAST(${articles.price} AS DECIMAL)`)
+      })
+      .from(articles)
+      .where(eq(articles.status, "vendu"));
+
+    // Calculate average price as coefficient
+    const [avgPrice] = await db
+      .select({ 
+        avgPrice: avg(sql`CAST(${articles.price} AS DECIMAL)`)
+      })
+      .from(articles)
+      .where(eq(articles.status, "vendu"));
 
     return {
-      monthlyItemsSold: monthlyStats[0]?.count || 0,
-      monthlyRevenue: monthlyStats[0]?.revenue || "0",
-      totalItemsSold: totalStats[0]?.count || 0,
-      averageCoefficient: totalStats[0]?.avgCoefficient || "0"
+      totalArticles: totalArticles.count || 0,
+      monthlyItemsSold: monthlySoldArticles.count || 0,
+      monthlyRevenue: monthlyRevenue.revenue?.toString() || "0.00",
+      totalItemsSold: totalSoldArticles.count || 0,
+      totalRevenue: totalRevenue.revenue?.toString() || "0.00",
+      averageCoefficient: avgPrice.avgPrice?.toString() || "0.00"
     };
   }
 }
