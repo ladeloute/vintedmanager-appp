@@ -287,20 +287,23 @@ export default function AIGenerator() {
                   <Button
                     type="submit"
                     disabled={generateMutation.isPending}
-                    className="relative bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 text-white px-12 py-6 rounded-2xl border border-white/20 backdrop-blur-xl font-bold text-lg transition-all duration-500 group-hover/button:scale-105"
+                    className="relative bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 text-white px-6 sm:px-12 py-3 sm:py-6 rounded-xl sm:rounded-2xl border border-white/20 backdrop-blur-xl font-bold text-sm sm:text-lg transition-all duration-500 group-hover/button:scale-105"
                   >
                     {generateMutation.isPending ? (
                       <>
-                        <div className="flex items-center space-x-3">
-                          <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          <span>Analyse quantique en cours...</span>
+                        <div className="flex items-center space-x-2 sm:space-x-3">
+                          <div className="w-4 h-4 sm:w-6 sm:h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <span className="text-xs sm:text-base">Analyse quantique...</span>
                         </div>
                       </>
                     ) : (
                       <>
-                        <div className="flex items-center space-x-3">
-                          <Sparkles className="w-6 h-6" />
-                          <span>LANCER L'IA QUANTIQUE</span>
+                        <div className="flex items-center space-x-2 sm:space-x-3">
+                          <Sparkles className="w-4 h-4 sm:w-6 sm:h-6" />
+                          <span className="text-xs sm:text-base">
+                            <span className="sm:hidden">LANCER L'IA</span>
+                            <span className="hidden sm:inline">LANCER L'IA QUANTIQUE</span>
+                          </span>
                         </div>
                       </>
                     )}

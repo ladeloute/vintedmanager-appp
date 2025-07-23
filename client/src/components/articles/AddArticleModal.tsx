@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 const articleSchema = z.object({
   name: z.string().min(1, "Le nom est requis"),
@@ -66,7 +66,7 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl sm:max-w-4xl max-w-[95vw] bg-transparent border-0 p-0 mx-2 sm:mx-auto">
+      <DialogContent className="max-w-4xl sm:max-w-4xl max-w-[95vw] max-h-[90vh] bg-transparent border-0 p-0 mx-2 sm:mx-auto overflow-hidden">
         <div className="relative">
           {/* Effets de fond futuristes */}
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-600/10 to-pink-500/10 rounded-2xl sm:rounded-3xl blur-xl"></div>
@@ -91,10 +91,10 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
                       <span className="sm:hidden">IA Quantique</span>
                       <span className="hidden sm:inline">Module de Création Quantique</span>
                     </DialogTitle>
-                    <p className="text-white/60 mt-1 text-xs sm:text-base">
+                    <DialogDescription className="text-white/60 mt-1 text-xs sm:text-base">
                       <span className="sm:hidden">IA intégrée</span>
                       <span className="hidden sm:inline">Synthèse avancée d'articles avec IA intégrée</span>
-                    </p>
+                    </DialogDescription>
                   </div>
                 </div>
                 <Button
@@ -107,7 +107,8 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
               </div>
             </div>
 
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="relative z-10 p-4 sm:p-8 space-y-6 sm:space-y-8">
+            <div className="relative z-10 max-h-[calc(90vh-120px)] overflow-y-auto">
+              <form onSubmit={form.handleSubmit(handleSubmit)} className="p-4 sm:p-8 space-y-6 sm:space-y-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
                 
                 {/* Section Image */}
@@ -311,8 +312,9 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
                     </Button>
                   </div>
                 </div>
-              </div>
-            </form>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </DialogContent>
