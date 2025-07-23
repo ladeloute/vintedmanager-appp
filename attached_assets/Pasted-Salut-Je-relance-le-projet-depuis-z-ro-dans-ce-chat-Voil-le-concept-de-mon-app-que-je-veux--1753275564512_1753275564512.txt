@@ -1,0 +1,81 @@
+Salut 👋
+
+Je relance le projet depuis zéro dans ce chat. Voilà le concept de mon app, que je veux développer pour mon père afin qu’il puisse gérer ses ventes sur Vinted avec l’aide de Gemini.
+
+---
+
+🎯 Objectif principal :
+Créer une app web & mobile stylée et fluide, qui permet :
+- De générer des descriptions Vinted automatiquement grâce à Gemini
+- De répondre aux messages des clients avec des suggestions IA
+- De gérer tous les articles (stock, statut, tri, recherche, historique)
+- De suivre ses statistiques de ventes (mensuelles et totales)
+
+---
+
+🧠 1. Générateur de description basé sur Gemini (IA + infos saisies)
+- L’utilisateur importe une **image** de l’article
+- Il saisit manuellement :
+  - **Prix**
+  - **Taille**
+  - **Marque**
+  - **Champ facultatif “Commentaire”** → ex : “petite tache blanche sous la manche droite”
+- Gemini génère :
+  - Un **titre stylé**
+  - Une **description Vinted complète** avec les infos donné et celle de l image
+- Boutons stylés :
+  - “📋 Copier la description”
+  - “🔁 Régénérer”
+
+---
+
+💬 2. Assistant réponses client Gemini
+- Interface type “chat IA”
+- On entre le message reçu d’un acheteur
+- Gemini propose **3 réponses automatiques simple et courtes avec un emoji**
+- Chaque réponse a :
+  - Bouton “📋 Copier”
+  - Bouton “🔁 Régénérer”
+
+---
+
+📦 3. Tableau de gestion d’articles
+- Chaque article ajouté contient :
+  - Nom
+  - Marque
+  - Taille
+  - Prix
+  - Image
+  - Statut : Vendu / Non vendu / En attente
+- Fonctionnalités :
+  - **Recherche** par nom
+  - **Tri** par marque, taille, fourchette de prix (ex : 10–20€), date (du + récent au + ancien)
+  - **Bouton “Générer description”** depuis la fiche article grace a l image ajouté a l article
+  - Boutons : “Modifier”
+---
+
+📈 4. Dashboard principal
+- Articles vendus ce mois
+- Argent gagné ce mois
+- Total vendu depuis le début
+- Coefficient moyen
+- Design visuel stylé et clair
+
+---
+
+💾 5. Sauvegarde et synchronisation
+- Intégration d’une base de données : Supabase, Firebase, autre
+- Sauvegarde des articles, descriptions, stats, images, conversations
+- Accessible à la fois sur ordinateur et téléphone (responsive design ou PWA)
+
+---
+
+🧩 Modules à développer :
+- Générateur IA avec Gemini
+- Assistant de réponses IA
+- Tableau des articles
+- Dashboard stats
+- Système de sauvegarde
+- Interface responsive (mobile + desktop)
+
+Merci de m’aider à poser une base propre pour cette version, entièrement centrée sur Gemini et pensée pour être utile au quotidien !
