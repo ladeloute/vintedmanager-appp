@@ -22,45 +22,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/articles", upload.single("image"), async (req, res) => {
-    try {
-      console.log("Raw request body:", req.body);
-      console.log("Request file:", req.file ? req.file.filename : "no file");
-      console.log("All request keys:", Object.keys(req.body));
-      
-      // Multer puts form fields in req.body when using FormData
-      const formData = req.body;
-      
-      const cleanData = {
-        name: formData.name || "",
-        brand: formData.brand || "",
-        size: formData.size || "",
-        price: formData.price || "",
-        status: formData.status || "non-vendu",
-        comment: formData.comment || ""
-      };
-      
-      console.log("Cleaned form data:", cleanData);
-      
-      const validatedData = insertArticleSchema.parse(cleanData);
-      
-      // Add image URL if file was uploaded
-      const articleData = {
-        ...validatedData,
-        imageUrl: req.file ? `/uploads/${req.file.filename}` : null
-      };
-
-      const article = await storage.createArticle(articleData);
-      res.json(article);
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        console.log("Validation errors:", error.errors);
-        res.status(400).json({ message: "Données invalides", errors: error.errors });
-      } else {
-        console.log("Server error:", error);
-        res.status(500).json({ message: "Erreur lors de la création de l'article" });
+  // Handle article creation with multer middleware
+  const handleArticleUpload = upload.single("image");
+  
+  app.post("/api/articles", (req, res) => {
+    handleArticleUpload(req, res, async (err) => {
+      if (err) {
+        console.log("Multer error:", err);
+        return res.status(400).json({ message: "Erreur de téléchargement" });
       }
-    }
+      
+      try {
+        console.log("Raw request body:", req.body);
+        console.log("Request file:", req.file ? req.file.filename : "no file");
+        console.log("All body keys:", Object.keys(req.body || {}));
+        
+        // Extract data from the parsed form
+        const cleanData = {
+          name: req.body.name || "",
+          brand: req.body.brand || "",
+          size: req.body.size || "",
+          price: req.body.price || "",
+          status: req.body.status || "non-vendu",
+          comment: req.body.comment || ""
+        };
+        
+        console.log("Cleaned form data:", cleanData);
+        
+        const validatedData = insertArticleSchema.parse(cleanData);
+        
+        // Add image URL if file was uploaded
+        const articleData = {
+          ...validatedData,
+          imageUrl: req.file ? `/uploads/${req.file.filename}` : null
+        };
+
+        const article = await storage.createArticle(articleData);
+        res.json(article);
+      } catch (error) {
+        if (error instanceof z.ZodError) {
+          console.log("Validation errors:", error.errors);
+          res.status(400).json({ message: "Données invalides", errors: error.errors });
+        } else {
+          console.log("Server error:", error);
+          res.status(500).json({ message: "Erreur lors de la création de l'article" });
+        }
+      }
+    });
   });
 
   app.patch("/api/articles/:id", async (req, res) => {
