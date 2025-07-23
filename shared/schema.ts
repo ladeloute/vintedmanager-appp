@@ -39,6 +39,9 @@ export const insertArticleSchema = createInsertSchema(articles).pick({
   price: true,
   status: true,
   comment: true,
+}).extend({
+  price: z.string().min(1, "Le prix est requis"),
+  comment: z.string().optional(),
 });
 
 export const insertSaleSchema = createInsertSchema(sales).pick({

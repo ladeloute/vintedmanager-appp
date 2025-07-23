@@ -24,6 +24,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/articles", upload.single("image"), async (req, res) => {
     try {
+      console.log("Received body:", req.body);
+      console.log("Received file:", req.file ? req.file.filename : "no file");
+      
       const validatedData = insertArticleSchema.parse(req.body);
       
       // Add image URL if file was uploaded
@@ -36,8 +39,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(article);
     } catch (error) {
       if (error instanceof z.ZodError) {
+        console.log("Validation errors:", error.errors);
         res.status(400).json({ message: "Données invalides", errors: error.errors });
       } else {
+        console.log("Server error:", error);
         res.status(500).json({ message: "Erreur lors de la création de l'article" });
       }
     }

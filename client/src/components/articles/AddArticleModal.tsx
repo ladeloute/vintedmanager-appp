@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 const articleSchema = z.object({
   name: z.string().min(1, "Le nom est requis"),
@@ -74,6 +74,9 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
               <X className="w-4 h-4" />
             </Button>
           </DialogTitle>
+          <DialogDescription>
+            Remplissez les informations de votre article pour l'ajouter à votre inventaire Vinted.
+          </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
@@ -104,7 +107,10 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
 
             <div>
               <Label htmlFor="size">Taille *</Label>
-              <Select onValueChange={(value) => form.setValue("size", value)}>
+              <Select 
+                value={form.watch("size")} 
+                onValueChange={(value) => form.setValue("size", value)}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Sélectionner" />
                 </SelectTrigger>
@@ -126,7 +132,7 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
               <Label htmlFor="price">Prix (€) *</Label>
               <Input
                 id="price"
-                type="number"
+                type="text"
                 placeholder="25"
                 {...form.register("price")}
               />
