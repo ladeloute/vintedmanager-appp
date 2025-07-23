@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, Copy, Sparkles, Download, Share2 } from "lucide-react";
+import { ArrowLeft, Copy, Sparkles, Download, Share2, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -68,11 +68,23 @@ export default function ArticleDescriptionGenerator({ onBack }: ArticleDescripti
       });
     } catch (error) {
       console.error("Erreur génération:", error);
-      toast({
-        title: "Erreur",
-        description: "Erreur lors de la génération de la description",
-        variant: "destructive",
-      });
+      
+      // Afficher un message d'erreur plus informatif selon le type d'erreur
+      const errorMessage = error instanceof Error ? error.message : "Erreur inconnue";
+      
+      if (errorMessage.includes("overloaded") || errorMessage.includes("503")) {
+        toast({
+          title: "IA temporairement surchargée",
+          description: "Le service IA est occupé. Cliquez sur 'Régénérer' pour réessayer dans quelques secondes.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Erreur de génération",
+          description: "Impossible de générer la description. Vérifiez l'image et réessayez.",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsGenerating(false);
     }
@@ -286,6 +298,22 @@ export default function ArticleDescriptionGenerator({ onBack }: ArticleDescripti
                       
                       {/* Actions */}
                       <div className="flex space-x-3 pt-4 border-t border-white/10">
+                        <div className="relative group/action">
+                          <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-600/20 rounded-xl blur opacity-0 group-hover/action:opacity-100 transition-all duration-300"></div>
+                          <Button
+                            onClick={() => article && handleGenerateDescription(article)}
+                            disabled={isGenerating}
+                            className="relative bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white border border-white/20 backdrop-blur-xl"
+                          >
+                            {isGenerating ? (
+                              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                            ) : (
+                              <RotateCcw className="w-4 h-4 mr-2" />
+                            )}
+                            Régénérer
+                          </Button>
+                        </div>
+                        
                         <div className="relative group/action flex-1">
                           <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-green-600/20 rounded-xl blur opacity-0 group-hover/action:opacity-100 transition-all duration-300"></div>
                           <Button
@@ -319,9 +347,35 @@ export default function ArticleDescriptionGenerator({ onBack }: ArticleDescripti
                       </div>
                     </div>
                   ) : (
-                    <div className="text-center py-12 text-white/60">
+                    <div className="text-center py-12 text-white/60 space-y-6">
                       <Sparkles className="w-16 h-16 mx-auto mb-4 text-white/20" />
-                      <p>Aucun contenu généré</p>
+                      <div>
+                        <p className="text-lg mb-2">Aucun contenu généré</p>
+                        <p className="text-sm text-white/40">L'IA n'a pas pu analyser cet article</p>
+                      </div>
+                      
+                      {article && (
+                        <div className="relative group/retry">
+                          <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-600/20 rounded-xl blur opacity-0 group-hover/retry:opacity-100 transition-all duration-300"></div>
+                          <Button
+                            onClick={() => handleGenerateDescription(article)}
+                            disabled={isGenerating}
+                            className="relative bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white border border-white/20 backdrop-blur-xl"
+                          >
+                            {isGenerating ? (
+                              <>
+                                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                                Génération...
+                              </>
+                            ) : (
+                              <>
+                                <Sparkles className="w-4 h-4 mr-2" />
+                                Essayer de générer
+                              </>
+                            )}
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   )}
                 </CardContent>
