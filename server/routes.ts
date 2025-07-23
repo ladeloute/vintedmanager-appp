@@ -24,20 +24,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/articles", upload.single("image"), async (req, res) => {
     try {
-      console.log("Received body:", req.body);
-      console.log("Received file:", req.file ? req.file.filename : "no file");
+      console.log("Raw request body:", req.body);
+      console.log("Request file:", req.file ? req.file.filename : "no file");
+      console.log("All request keys:", Object.keys(req.body));
       
-      // Clean the data before validation
+      // Multer puts form fields in req.body when using FormData
+      const formData = req.body;
+      
       const cleanData = {
-        name: req.body.name || "",
-        brand: req.body.brand || "",
-        size: req.body.size || "",
-        price: req.body.price || "",
-        status: req.body.status || "non-vendu",
-        comment: req.body.comment || ""
+        name: formData.name || "",
+        brand: formData.brand || "",
+        size: formData.size || "",
+        price: formData.price || "",
+        status: formData.status || "non-vendu",
+        comment: formData.comment || ""
       };
       
-      console.log("Clean data:", cleanData);
+      console.log("Cleaned form data:", cleanData);
       
       const validatedData = insertArticleSchema.parse(cleanData);
       
