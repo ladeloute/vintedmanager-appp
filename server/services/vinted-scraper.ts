@@ -71,13 +71,36 @@ async function scrapWithPuppeteer(profileUrl: string): Promise<VintedAnnonce[]> 
       timeout: 30000 
     });
 
-    // Attendre le chargement des articles
-    await page.waitForSelector('.feed-grid', { timeout: 10000 });
+    // Attendre le chargement des articles - essayer plusieurs sélecteurs
+    try {
+      await page.waitForSelector('.feed-grid', { timeout: 10000 });
+    } catch {
+      try {
+        await page.waitForSelector('[data-testid="item-box"]', { timeout: 5000 });
+      } catch {
+        await page.waitForSelector('.ItemBox', { timeout: 5000 });
+      }
+    }
     
     console.log('🔍 Extraction des données...');
     const annonces = await page.evaluate(() => {
       const articles: any[] = [];
-      const itemElements = document.querySelectorAll('.feed-grid .feed-grid__item');
+      // Essayer plusieurs sélecteurs pour les articles
+      const selectors = [
+        '.feed-grid .feed-grid__item',
+        '[data-testid="item-box"]',
+        '.ItemBox',
+        '.c-item-box',
+        '.item-card'
+      ];
+      
+      let itemElements: NodeListOf<Element> | null = null;
+      for (const selector of selectors) {
+        itemElements = document.querySelectorAll(selector);
+        if (itemElements.length > 0) break;
+      }
+      
+      if (!itemElements) return articles;
       
       itemElements.forEach((item, index) => {
         if (index >= 20) return; // Limiter à 20 articles max
@@ -245,7 +268,7 @@ function extractAnnoncesFromHTML(html: string): VintedAnnonce[] {
   
   // Fallback: extraction basique depuis le HTML
   if (annonces.length === 0) {
-    const itemBoxes = html.match(/<div[^>]*class="[^"]*ItemBox[^"]*"[^>]*>.*?<\/div>/gs) || [];
+    const itemBoxes = html.match(/<div[^>]*class="[^"]*ItemBox[^"]*"[^>]*>.*?<\/div>/g) || [];
     
     itemBoxes.slice(0, 10).forEach((box, index) => {
       const titleMatch = box.match(/title="([^"]+)"/);
