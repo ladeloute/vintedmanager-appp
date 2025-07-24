@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Plus, Search, ChevronLeft, ChevronRight, Package, Sparkles, CheckCircle, Edit, Trash2 } from "lucide-react";
+import { Plus, Search, ChevronLeft, ChevronRight, Package, Sparkles, CheckCircle, Edit, Trash2, Download } from "lucide-react";
+import * as XLSX from 'xlsx';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -43,6 +44,7 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
       formData.append("brand", data.brand || "");
       formData.append("size", data.size || "");
       formData.append("price", data.price || "");
+      formData.append("purchasePrice", data.purchasePrice || "");
       formData.append("status", data.status || "non-vendu");
       formData.append("comment", data.comment || "");
       
@@ -52,6 +54,7 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
       }
       
       // Log FormData contents
+      
       console.log("FormData entries:");
       const entries = Array.from(formData.entries());
       entries.forEach(([key, value]) => {
@@ -140,6 +143,67 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
   const handleEditArticle = (article: Article) => {
     setSelectedArticle(article);
     setEditModalOpen(true);
+  };
+
+  const exportToExcel = () => {
+    if (filteredArticles.length === 0) {
+      toast({
+        title: "Aucune donnée",
+        description: "Aucun article à exporter",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Préparer les données pour l'export
+    const exportData = filteredArticles.map(article => ({
+      'Nom': article.name,
+      'Marque': article.brand,
+      'Taille': article.size,
+      'Prix de vente (€)': article.price,
+      'Prix d\'achat (€)': article.purchasePrice || 0,
+      'Marge (€)': article.status === 'vendu' ? (parseFloat(article.price) - parseFloat(article.purchasePrice || '0')).toFixed(2) : '',
+      'Coefficient': article.status === 'vendu' && article.purchasePrice ? (parseFloat(article.price) / parseFloat(article.purchasePrice)).toFixed(2) : '',
+      'Statut': article.status === 'vendu' ? 'Vendu' : article.status === 'en-attente' ? 'En attente' : 'Non vendu',
+      'Commentaires': article.comment || '',
+      'Date de création': new Date(article.createdAt).toLocaleDateString('fr-FR'),
+      'Dernière mise à jour': new Date(article.updatedAt).toLocaleDateString('fr-FR')
+    }));
+
+    // Créer le workbook et la worksheet
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(exportData);
+
+    // Définir la largeur des colonnes
+    const colWidths = [
+      { wch: 30 }, // Nom
+      { wch: 15 }, // Marque
+      { wch: 10 }, // Taille
+      { wch: 15 }, // Prix de vente
+      { wch: 15 }, // Prix d'achat
+      { wch: 12 }, // Marge
+      { wch: 12 }, // Coefficient
+      { wch: 12 }, // Statut
+      { wch: 25 }, // Commentaires
+      { wch: 15 }, // Date création
+      { wch: 15 }  // Dernière MAJ
+    ];
+    ws['!cols'] = colWidths;
+
+    // Ajouter la worksheet au workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'Articles');
+
+    // Générer le nom du fichier avec la date
+    const now = new Date();
+    const fileName = `articles_vinted_${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}.xlsx`;
+
+    // Sauvegarder le fichier
+    XLSX.writeFile(wb, fileName);
+
+    toast({
+      title: "Export réussi",
+      description: `${filteredArticles.length} articles exportés vers ${fileName}`,
+    });
   };
 
   const handleGenerateDescription = async (article: Article) => {
@@ -232,7 +296,20 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
                   <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
                   <h2 className="text-2xl font-bold text-white/90">Base de données quantique</h2>
                 </div>
-                <div className="flex justify-end">
+                <div className="flex justify-end space-x-4">
+                  {/* Bouton Export Excel */}
+                  <div className="relative group/export">
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-600 rounded-xl blur opacity-60 group-hover/export:opacity-80 transition-all duration-500"></div>
+                    <Button
+                      onClick={exportToExcel}
+                      className="relative bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white px-4 sm:px-6 py-3 rounded-xl border border-white/20 backdrop-blur-xl font-medium transition-all duration-500 group-hover/export:scale-105"
+                    >
+                      <Download className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                      <span className="hidden sm:inline">Exporter Excel</span>
+                      <span className="sm:hidden">Excel</span>
+                    </Button>
+                  </div>
+
                   {/* Bouton Ajouter */}
                   <div className="relative group/add">
                     <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl blur opacity-60 group-hover/add:opacity-80 transition-all duration-500"></div>
@@ -241,7 +318,8 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
                       className="relative bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white px-4 sm:px-6 py-3 rounded-xl border border-white/20 backdrop-blur-xl font-medium transition-all duration-500 group-hover/add:scale-105"
                     >
                       <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                      Ajouter un article
+                      <span className="hidden sm:inline">Ajouter un article</span>
+                      <span className="sm:hidden">Ajouter</span>
                     </Button>
                   </div>
                 </div>
