@@ -18,6 +18,7 @@ const editArticleSchema = z.object({
   brand: z.string().min(1, "La marque est requise"),
   size: z.string().min(1, "La taille est requise"),
   price: z.string().min(1, "Le prix est requis"),
+  purchasePrice: z.string().min(1, "Le prix d'achat est requis"),
   status: z.enum(["non-vendu", "vendu", "en-attente"]),
   comment: z.string().optional(),
 });
@@ -43,6 +44,7 @@ export default function EditArticleModal({ article, isOpen, onClose }: EditArtic
       brand: "",
       size: "",
       price: "",
+      purchasePrice: "",
       status: "non-vendu",
       comment: "",
     },
@@ -56,6 +58,7 @@ export default function EditArticleModal({ article, isOpen, onClose }: EditArtic
         brand: article.brand,
         size: article.size,
         price: article.price.toString(),
+        purchasePrice: article.purchasePrice.toString(),
         status: article.status,
         comment: article.comment || "",
       });
@@ -73,6 +76,7 @@ export default function EditArticleModal({ article, isOpen, onClose }: EditArtic
       formData.append("brand", data.brand);
       formData.append("size", data.size);
       formData.append("price", data.price);
+      formData.append("purchasePrice", data.purchasePrice);
       formData.append("status", data.status);
       formData.append("comment", data.comment || "");
 
@@ -239,7 +243,7 @@ export default function EditArticleModal({ article, isOpen, onClose }: EditArtic
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="price" className="text-white/80">Prix (€)</Label>
+              <Label htmlFor="price" className="text-white/80">Prix de vente (€)</Label>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/20 to-orange-600/20 rounded-xl blur"></div>
                 <div className="relative bg-black/40 backdrop-blur-xl border border-yellow-500/30 rounded-xl">
@@ -255,6 +259,26 @@ export default function EditArticleModal({ article, isOpen, onClose }: EditArtic
               </div>
               {form.formState.errors.price && (
                 <p className="text-sm text-red-400">{form.formState.errors.price.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="purchasePrice" className="text-white/80">Prix d'achat (€)</Label>
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-600/20 rounded-xl blur"></div>
+                <div className="relative bg-black/40 backdrop-blur-xl border border-amber-500/30 rounded-xl">
+                  <Input
+                    id="purchasePrice"
+                    type="number"
+                    step="0.01"
+                    {...form.register("purchasePrice")}
+                    className="bg-transparent border-0 text-white placeholder:text-white/40"
+                    placeholder="10.00"
+                  />
+                </div>
+              </div>
+              {form.formState.errors.purchasePrice && (
+                <p className="text-sm text-red-400">{form.formState.errors.purchasePrice.message}</p>
               )}
             </div>
           </div>

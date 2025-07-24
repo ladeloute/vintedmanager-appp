@@ -15,6 +15,7 @@ const articleSchema = z.object({
   brand: z.string().min(1, "La marque est requise"),
   size: z.string().min(1, "La taille est requise"),
   price: z.string().min(1, "Le prix est requis"),
+  purchasePrice: z.string().min(1, "Le prix d'achat est requis"),
   comment: z.string().optional(),
   status: z.enum(["vendu", "non-vendu", "en-attente"]).default("non-vendu"),
 });
@@ -38,6 +39,7 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
       brand: "",
       size: "",
       price: "",
+      purchasePrice: "",
       comment: "",
       status: "non-vendu",
     },
@@ -218,14 +220,15 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div className="space-y-2 sm:space-y-4">
-                      <Label htmlFor="price" className="text-white/80 text-sm sm:text-base">Prix (€)</Label>
+                      <Label htmlFor="price" className="text-white/80 text-sm sm:text-base">Prix de vente (€)</Label>
                       <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-600/20 rounded-xl blur"></div>
                         <div className="relative bg-black/40 backdrop-blur-xl border border-green-500/30 rounded-xl">
                           <Input
                             id="price"
                             type="number"
-                            placeholder="25"
+                            step="0.01"
+                            placeholder="25.00"
                             {...form.register("price")}
                             className="bg-transparent border-0 text-white placeholder:text-white/40 h-12"
                           />
@@ -237,21 +240,41 @@ export default function AddArticleModal({ isOpen, onClose, onSubmit }: AddArticl
                     </div>
 
                     <div className="space-y-2 sm:space-y-4">
-                      <Label htmlFor="status" className="text-white/80 text-sm sm:text-base">Statut</Label>
+                      <Label htmlFor="purchasePrice" className="text-white/80 text-sm sm:text-base">Prix d'achat (€)</Label>
                       <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-blue-600/20 rounded-xl blur"></div>
-                        <div className="relative bg-black/40 backdrop-blur-xl border border-indigo-500/30 rounded-xl">
-                          <Select onValueChange={(value) => form.setValue("status", value as any)}>
-                            <SelectTrigger className="bg-transparent border-0 text-white h-12">
-                              <SelectValue placeholder="Non vendu" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="non-vendu">Non vendu</SelectItem>
-                              <SelectItem value="en-attente">En attente</SelectItem>
-                              <SelectItem value="vendu">Vendu</SelectItem>
-                            </SelectContent>
-                          </Select>
+                        <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-600/20 rounded-xl blur"></div>
+                        <div className="relative bg-black/40 backdrop-blur-xl border border-amber-500/30 rounded-xl">
+                          <Input
+                            id="purchasePrice"
+                            type="number"
+                            step="0.01"
+                            placeholder="10.00"
+                            {...form.register("purchasePrice")}
+                            className="bg-transparent border-0 text-white placeholder:text-white/40 h-12"
+                          />
                         </div>
+                      </div>
+                      {form.formState.errors.purchasePrice && (
+                        <p className="text-red-400 text-sm">{form.formState.errors.purchasePrice.message}</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 sm:space-y-4">
+                    <Label htmlFor="status" className="text-white/80 text-sm sm:text-base">Statut</Label>
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-blue-600/20 rounded-xl blur"></div>
+                      <div className="relative bg-black/40 backdrop-blur-xl border border-indigo-500/30 rounded-xl">
+                        <Select onValueChange={(value) => form.setValue("status", value as any)}>
+                          <SelectTrigger className="bg-transparent border-0 text-white h-12">
+                            <SelectValue placeholder="Non vendu" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="non-vendu">Non vendu</SelectItem>
+                            <SelectItem value="en-attente">En attente</SelectItem>
+                            <SelectItem value="vendu">Vendu</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
                     </div>
                   </div>

@@ -242,7 +242,7 @@ export default function Dashboard() {
                 {/* Total Revenue */}
                 <div className="relative group/card">
                   <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-600/20 rounded-2xl blur group-hover/card:blur-none transition-all duration-500"></div>
-                  <div className="relative bg-black/40 backdrop-blur-xl border border-purple-500/30 rounded-2xl p-6 hover:border-purple-400/60 transition-all duration-500">
+                  <div className="relative bg-black/40 backdrop-blur-xl border border-purple-500/30 rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:border-purple-400/60 transition-all duration-500">
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl">
                         <Euro className="w-6 h-6 text-white" />
@@ -256,8 +256,59 @@ export default function Dashboard() {
                   </div>
                 </div>
 
+                {/* Total Margin */}
+                <div className="relative group/card">
+                  <div className="absolute inset-0 bg-gradient-to-br from-teal-500/20 to-cyan-600/20 rounded-2xl blur group-hover/card:blur-none transition-all duration-500"></div>
+                  <div className="relative bg-black/40 backdrop-blur-xl border border-teal-500/30 rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:border-teal-400/60 transition-all duration-500">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-3 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl">
+                        <BarChart3 className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="text-teal-400 text-xs font-mono">MARGE</div>
+                    </div>
+                    <div className="text-sm text-white/60 mb-2">Marge totale</div>
+                    <div className="text-3xl font-bold bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
+                      {stats?.totalMargin || 0}€
+                    </div>
+                  </div>
+                </div>
+
+                {/* Coefficient Moyen */}
+                <div className="relative group/card">
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-600/20 rounded-2xl blur group-hover/card:blur-none transition-all duration-500"></div>
+                  <div className="relative bg-black/40 backdrop-blur-xl border border-orange-500/30 rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:border-orange-400/60 transition-all duration-500">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-3 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl">
+                        <Target className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="text-orange-400 text-xs font-mono">COEFF</div>
+                    </div>
+                    <div className="text-sm text-white/60 mb-2">Coefficient moyen</div>
+                    <div className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
+                      x{stats?.averageCoefficient || 0}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Margin Percentage */}
+                <div className="relative group/card">
+                  <div className="absolute inset-0 bg-gradient-to-br from-pink-500/20 to-rose-600/20 rounded-2xl blur group-hover/card:blur-none transition-all duration-500"></div>
+                  <div className="relative bg-black/40 backdrop-blur-xl border border-pink-500/30 rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:border-pink-400/60 transition-all duration-500">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-3 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl">
+                        <Activity className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="text-pink-400 text-xs font-mono">%MARGE</div>
+                    </div>
+                    <div className="text-sm text-white/60 mb-2">Pourcentage marge</div>
+                    <div className="text-3xl font-bold bg-gradient-to-r from-pink-400 to-rose-400 bg-clip-text text-transparent">
+                      {stats?.averageMarginPercent || 0}%
+                    </div>
+                  </div>
+                </div>
+
                 {/* Performance Sphere */}
-                <div className="relative group/card flex items-center justify-center">
+                <div className="relative group/card flex items-center justify-center lg:col-span-2">
                   <div className="relative">
                     <div className="w-40 h-40 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-600/20 backdrop-blur-xl border border-cyan-500/30 flex items-center justify-center group-hover/card:scale-110 transition-all duration-700">
                       <div className="text-center">

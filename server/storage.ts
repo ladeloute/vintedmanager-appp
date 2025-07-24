@@ -128,10 +128,11 @@ export class DatabaseStorage implements IStorage {
       .from(articles)
       .where(eq(articles.status, "vendu"));
 
-    // Get monthly revenue from sold articles this month
-    const [monthlyRevenue] = await db
+    // Get monthly revenue and cost from sold articles this month
+    const [monthlyStats] = await db
       .select({ 
-        revenue: sum(sql`CAST(${articles.price} AS DECIMAL)`)
+        revenue: sum(sql`CAST(${articles.price} AS DECIMAL)`),
+        cost: sum(sql`CAST(${articles.purchasePrice} AS DECIMAL)`)
       })
       .from(articles)
       .where(and(
@@ -139,29 +140,45 @@ export class DatabaseStorage implements IStorage {
         gte(articles.updatedAt, startOfMonth)
       ));
 
-    // Get total revenue from all sold articles
-    const [totalRevenue] = await db
+    // Get total revenue and cost from all sold articles
+    const [totalStats] = await db
       .select({ 
-        revenue: sum(sql`CAST(${articles.price} AS DECIMAL)`)
+        revenue: sum(sql`CAST(${articles.price} AS DECIMAL)`),
+        cost: sum(sql`CAST(${articles.purchasePrice} AS DECIMAL)`)
       })
       .from(articles)
       .where(eq(articles.status, "vendu"));
 
-    // Calculate average price as coefficient
-    const [avgPrice] = await db
+    // Get average coefficient for sold articles
+    const [coefficientData] = await db
       .select({ 
-        avgPrice: avg(sql`CAST(${articles.price} AS DECIMAL)`)
+        avgCoeff: avg(sql`CAST(${articles.price} AS DECIMAL) / NULLIF(CAST(${articles.purchasePrice} AS DECIMAL), 0)`)
       })
       .from(articles)
       .where(eq(articles.status, "vendu"));
+
+    // Calculate margins
+    const monthlyRevenue = parseFloat(monthlyStats?.revenue?.toString() || "0");
+    const monthlyCost = parseFloat(monthlyStats?.cost?.toString() || "0");
+    const monthlyMargin = monthlyRevenue - monthlyCost;
+
+    const totalRevenue = parseFloat(totalStats?.revenue?.toString() || "0");
+    const totalCost = parseFloat(totalStats?.cost?.toString() || "0");
+    const totalMargin = totalRevenue - totalCost;
+
+    // Calculate average margin percentage
+    const averageMarginPercent = totalRevenue > 0 ? ((totalMargin / totalRevenue) * 100) : 0;
 
     return {
       totalArticles: totalArticles.count || 0,
       monthlyItemsSold: monthlySoldArticles.count || 0,
-      monthlyRevenue: monthlyRevenue.revenue?.toString() || "0.00",
+      monthlyRevenue: monthlyRevenue.toFixed(2),
+      monthlyMargin: monthlyMargin.toFixed(2),
       totalItemsSold: totalSoldArticles.count || 0,
-      totalRevenue: totalRevenue.revenue?.toString() || "0.00",
-      averageCoefficient: avgPrice.avgPrice?.toString() || "0.00"
+      totalRevenue: totalRevenue.toFixed(2),
+      totalMargin: totalMargin.toFixed(2),
+      averageCoefficient: parseFloat(coefficientData?.avgCoeff?.toString() || "0").toFixed(2),
+      averageMarginPercent: averageMarginPercent.toFixed(1),
     };
   }
 }

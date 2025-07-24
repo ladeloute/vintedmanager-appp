@@ -40,6 +40,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         brand: req.body.brand || "",
         size: req.body.size || "",
         price: req.body.price || "",
+        purchasePrice: req.body.purchasePrice || "",
         status: req.body.status || "non-vendu",
         comment: req.body.comment || ""
       };
@@ -84,6 +85,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         brand: req.body.brand || "",
         size: req.body.size || "",
         price: req.body.price || "",
+        purchasePrice: req.body.purchasePrice || "",
         status: req.body.status || "non-vendu",
         comment: req.body.comment || ""
       };

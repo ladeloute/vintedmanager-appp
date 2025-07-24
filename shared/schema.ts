@@ -8,6 +8,7 @@ export const articles = pgTable("articles", {
   brand: text("brand").notNull(),
   size: text("size").notNull(),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+  purchasePrice: decimal("purchase_price", { precision: 10, scale: 2 }).notNull(),
   status: text("status", { enum: ["vendu", "non-vendu", "en-attente"] }).notNull().default("non-vendu"),
   imageUrl: text("image_url"),
   comment: text("comment"),
@@ -37,6 +38,7 @@ export const insertArticleSchema = z.object({
   brand: z.string().min(1, "La marque est requise"), 
   size: z.string().min(1, "La taille est requise"),
   price: z.string().min(1, "Le prix est requis"),
+  purchasePrice: z.string().min(1, "Le prix d'achat est requis"),
   status: z.enum(["vendu", "non-vendu", "en-attente"]).default("non-vendu"),
   comment: z.string().optional().or(z.literal("")),
 });
@@ -63,7 +65,10 @@ export interface DashboardStats {
   totalArticles: number;
   monthlyItemsSold: number;
   monthlyRevenue: string;
+  monthlyMargin: string;
   totalItemsSold: number;
   totalRevenue: string;
+  totalMargin: string;
   averageCoefficient: string;
+  averageMarginPercent: string;
 }

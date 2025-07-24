@@ -11,6 +11,7 @@ export interface Article {
   brand: string;
   size: string;
   price: string;
+  purchasePrice: string;
   status: "vendu" | "non-vendu" | "en-attente";
   imageUrl?: string;
   comment?: string;
@@ -24,9 +25,12 @@ export interface DashboardStats {
   totalArticles: number;
   monthlyItemsSold: number;
   monthlyRevenue: string;
+  monthlyMargin: string;
   totalItemsSold: number;
   totalRevenue: string;
+  totalMargin: string;
   averageCoefficient: string;
+  averageMarginPercent: string;
 }
 
 export async function generateDescription(formData: FormData): Promise<GeneratedContent> {

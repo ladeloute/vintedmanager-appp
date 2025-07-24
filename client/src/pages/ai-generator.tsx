@@ -15,6 +15,7 @@ import { generateDescription, createArticle, type GeneratedContent } from "@/lib
 
 const generatorSchema = z.object({
   price: z.string().min(1, "Le prix est requis"),
+  purchasePrice: z.string().min(1, "Le prix d'achat est requis"),
   size: z.string().min(1, "La taille est requise"),
   brand: z.string().min(1, "La marque est requise"),
   comment: z.string().optional(),
@@ -33,6 +34,7 @@ export default function AIGenerator() {
     resolver: zodResolver(generatorSchema),
     defaultValues: {
       price: "",
+      purchasePrice: "",
       size: "",
       brand: "",
       comment: "",
@@ -48,6 +50,7 @@ export default function AIGenerator() {
       const formData = new FormData();
       formData.append("image", selectedImage);
       formData.append("price", data.price);
+      formData.append("purchasePrice", data.purchasePrice);
       formData.append("size", data.size);
       formData.append("brand", data.brand);
       if (data.comment) {
@@ -78,12 +81,18 @@ export default function AIGenerator() {
         throw new Error("Données manquantes pour créer l'article");
       }
 
+      const purchasePrice = form.getValues("purchasePrice");
+      if (!purchasePrice) {
+        throw new Error("Le prix d'achat est requis pour ajouter l'article au tableau");
+      }
+
       const formData = new FormData();
       formData.append("image", selectedImage);
       formData.append("name", generatedContent.title);
       formData.append("brand", form.getValues("brand"));
       formData.append("size", form.getValues("size"));
       formData.append("price", form.getValues("price"));
+      formData.append("purchasePrice", purchasePrice);
       formData.append("status", "non-vendu");
       formData.append("comment", form.getValues("comment") || "");
 
@@ -236,14 +245,15 @@ export default function AIGenerator() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="price" className="text-white/80">Prix quantique (€)</Label>
+                    <Label htmlFor="price" className="text-white/80">Prix de vente (€)</Label>
                     <div className="relative">
                       <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-green-600/20 rounded-xl blur"></div>
                       <div className="relative bg-black/40 backdrop-blur-xl border border-emerald-500/30 rounded-xl">
                         <Input
                           id="price"
                           type="number"
-                          placeholder="25"
+                          step="0.01"
+                          placeholder="25.00"
                           {...form.register("price")}
                           className="bg-transparent border-0 text-white placeholder:text-white/40"
                         />
@@ -252,6 +262,27 @@ export default function AIGenerator() {
                     </div>
                     {form.formState.errors.price && (
                       <p className="text-sm text-red-400">{form.formState.errors.price.message}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="purchasePrice" className="text-white/80">Prix d'achat (€)</Label>
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-600/20 rounded-xl blur"></div>
+                      <div className="relative bg-black/40 backdrop-blur-xl border border-amber-500/30 rounded-xl">
+                        <Input
+                          id="purchasePrice"
+                          type="number"
+                          step="0.01"
+                          placeholder="10.00"
+                          {...form.register("purchasePrice")}
+                          className="bg-transparent border-0 text-white placeholder:text-white/40"
+                        />
+                        <span className="absolute right-3 top-3 text-amber-400 font-mono">€</span>
+                      </div>
+                    </div>
+                    {form.formState.errors.purchasePrice && (
+                      <p className="text-sm text-red-400">{form.formState.errors.purchasePrice.message}</p>
                     )}
                   </div>
 
