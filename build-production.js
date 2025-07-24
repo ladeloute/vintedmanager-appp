@@ -13,7 +13,7 @@ try {
 
   // 2. Build backend avec esbuild
   console.log('⚙️ Building backend...');
-  execSync(`npx esbuild server/index.ts --bundle --platform=node --outfile=dist/server.js --external:@neondatabase/serverless --external:ws --external:lightningcss --external:@babel/preset-typescript --packages=external --format=esm --banner:js="import { createRequire } from 'module'; const require = createRequire(import.meta.url);"`, { stdio: 'inherit' });
+  execSync(`npx esbuild server/index.ts --bundle --platform=node --outfile=dist/server.js --external:@neondatabase/serverless --external:ws --external:vite --external:lightningcss --external:@babel/preset-typescript --packages=external --format=esm --banner:js="import { createRequire } from 'module'; const require = createRequire(import.meta.url);"`, { stdio: 'inherit' });
 
   // 3. Créer le dossier uploads si nécessaire
   const uploadsDir = 'uploads';

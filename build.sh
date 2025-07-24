@@ -11,7 +11,7 @@ echo "📦 Building frontend..."
 npx vite build --outDir=dist/public
 
 echo "⚙️ Building backend..."
-npx esbuild server/index.ts --bundle --platform=node --outfile=dist/server.js --external:@neondatabase/serverless --external:ws --packages=external --format=esm --banner:js="import { createRequire } from 'module'; const require = createRequire(import.meta.url);"
+npx esbuild server/index.ts --bundle --platform=node --outfile=dist/server.js --external:@neondatabase/serverless --external:ws --external:vite --packages=external --format=esm --banner:js="import { createRequire } from 'module'; const require = createRequire(import.meta.url);"
 
 # Create uploads directory
 mkdir -p uploads
