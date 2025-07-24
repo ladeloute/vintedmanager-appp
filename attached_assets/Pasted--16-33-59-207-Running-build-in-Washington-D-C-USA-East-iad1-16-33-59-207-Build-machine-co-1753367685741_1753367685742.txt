@@ -1,0 +1,42 @@
+[16:33:59.207] Running build in Washington, D.C., USA (East) – iad1
+[16:33:59.207] Build machine configuration: 2 cores, 8 GB
+[16:33:59.220] Cloning github.com/ladeloute/vintedmanager-appp (Branch: main, Commit: cdfa3df)
+[16:33:59.345] Previous build caches not available
+[16:34:00.115] Cloning completed: 895.000ms
+[16:34:00.383] Running "vercel build"
+[16:34:01.425] Vercel CLI 44.5.0
+[16:34:02.429] Running "install" command: `npm install`...
+[16:34:17.003] 
+[16:34:17.004] added 546 packages, and audited 547 packages in 14s
+[16:34:17.005] 
+[16:34:17.005] 77 packages are looking for funding
+[16:34:17.005]   run `npm fund` for details
+[16:34:17.008] 
+[16:34:17.008] 4 vulnerabilities (3 low, 1 high)
+[16:34:17.008] 
+[16:34:17.008] To address issues that do not require attention, run:
+[16:34:17.009]   npm audit fix
+[16:34:17.009] 
+[16:34:17.009] Some issues need review, and may require choosing
+[16:34:17.009] a different dependency.
+[16:34:17.010] 
+[16:34:17.010] Run `npm audit` for details.
+[16:34:17.424] 🚀 Building VintedManager for production...
+[16:34:17.425] 📦 Building frontend...
+[16:34:18.096] npm warn exec The following package was not found and will be installed: vite@7.0.6
+[16:34:23.375] [31mfailed to load config from /vercel/path0/vite.config.ts[39m
+[16:34:23.376] [31merror during build:
+[16:34:23.376] Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /vercel/path0/node_modules/.vite-temp/vite.config.ts.timestamp-1753367663372-59e9288c0690d.mjs
+[16:34:23.376]     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+[16:34:23.376]     at packageResolve (node:internal/modules/esm/resolve:768:81)
+[16:34:23.377]     at moduleResolve (node:internal/modules/esm/resolve:854:18)
+[16:34:23.377]     at defaultResolve (node:internal/modules/esm/resolve:984:11)
+[16:34:23.377]     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+[16:34:23.377]     at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+[16:34:23.377]     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+[16:34:23.377]     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+[16:34:23.378]     at ModuleJob._link (node:internal/modules/esm/module_job:175:49)[39m
+[16:34:23.396] ❌ Build failed: Command failed: npx vite build
+[16:34:23.401] Error: Command "node build-production.js" exited with 1
+[16:34:23.587] 
+[16:34:27.054] Exiting build container
