@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Plus, Search, ChevronLeft, ChevronRight, Package, Sparkles, CheckCircle, Edit, Trash2, Download } from "lucide-react";
+import { Plus, Search, ChevronLeft, ChevronRight, Package, Sparkles, CheckCircle, Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -120,44 +120,7 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
     await createMutation.mutateAsync({ data, image });
   };
 
-  const importVintedMutation = useMutation({
-    mutationFn: async () => {
-      const profileUrl = "https://www.vinted.fr/member/270400658";
-      const response = await fetch("/api/import-vinted", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ profileUrl }),
-      });
-      
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Erreur lors de l'import");
-      }
-      
-      return response.json();
-    },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["/api/articles"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/dashboard-stats"] });
-      toast({
-        title: "Import réussi",
-        description: `${data.importedCount} annonces importées depuis Vinted`,
-      });
-    },
-    onError: (error) => {
-      toast({
-        title: "Import automatique impossible",
-        description: "Vinted protège ses données contre l'extraction automatique. Utilisez plutôt le bouton 'Ajouter un article' pour créer vos annonces manuellement.",
-        variant: "destructive",
-      });
-    },
-  });
 
-  const handleImportVinted = () => {
-    importVintedMutation.mutate();
-  };
 
   const handleMarkAsSold = async (id: number) => {
     if (confirm("Marquer cet article comme vendu ?")) {
@@ -269,29 +232,7 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
                   <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
                   <h2 className="text-2xl font-bold text-white/90">Base de données quantique</h2>
                 </div>
-                <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                  {/* Bouton Import Vinted */}
-                  <div className="relative group/import">
-                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-600 rounded-xl blur opacity-60 group-hover/import:opacity-80 transition-all duration-500"></div>
-                    <Button
-                      onClick={handleImportVinted}
-                      disabled={importVintedMutation.isPending}
-                      className="relative bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white px-4 sm:px-6 py-3 rounded-xl border border-white/20 backdrop-blur-xl font-medium transition-all duration-500 group-hover/import:scale-105 disabled:opacity-50"
-                    >
-                      {importVintedMutation.isPending ? (
-                        <>
-                          <div className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin border-2 border-white border-t-transparent rounded-full" />
-                          Import en cours...
-                        </>
-                      ) : (
-                        <>
-                          <Download className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                          📥 Importer Vinted
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                  
+                <div className="flex justify-end">
                   {/* Bouton Ajouter */}
                   <div className="relative group/add">
                     <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl blur opacity-60 group-hover/add:opacity-80 transition-all duration-500"></div>

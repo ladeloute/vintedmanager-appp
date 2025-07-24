@@ -146,3 +146,10 @@ The application is designed to be scalable and maintainable, with clear separati
 - **Monthly Tracking**: Smart monthly calculations based on article update timestamps
 - **Revenue Calculations**: Automatic price aggregation for sold items
 - **Type Safety**: Enhanced TypeScript interfaces for dashboard statistics
+
+### Vinted Integration Removal (January 24, 2025)
+- **Removed Vinted Import**: Complete removal of Vinted scraping functionality per user request
+- **Simplified Interface**: Removed Vinted import button from article management
+- **Code Cleanup**: Deleted vinted-scraper service and related API endpoints
+- **Deployment Focus**: Removed Vercel configuration, focusing solely on Replit deployment
+- **Streamlined Workflow**: Application now uses only manual article creation for better reliability

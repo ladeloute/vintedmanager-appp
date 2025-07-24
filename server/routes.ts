@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { upload, getImageAsBase64 } from "./services/upload";
 import { generateArticleDescription, generateCustomerResponses } from "./services/gemini";
-import { getVintedAnnonces } from "./services/vinted-scraper";
+
 import { insertArticleSchema, insertSaleSchema, insertConversationSchema } from "@shared/schema";
 import { z } from "zod";
 import express from "express";
@@ -192,57 +192,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Import Vinted annonces
-  app.post("/api/import-vinted", async (req, res) => {
-    try {
-      const { profileUrl } = req.body;
-      
-      if (!profileUrl) {
-        return res.status(400).json({ message: "URL du profil Vinted requise" });
-      }
-      
-      console.log(`Import des annonces depuis: ${profileUrl}`);
-      
-      // Récupérer les annonces depuis Vinted
-      const vintedAnnonces = await getVintedAnnonces(profileUrl);
-      
-      // Convertir en format compatible avec notre schéma
-      const importedArticles = [];
-      
-      for (const annonce of vintedAnnonces) {
-        try {
-          const articleData = {
-            name: annonce.title,
-            brand: annonce.brand,
-            size: annonce.size,
-            price: annonce.price,
-            status: "non-vendu" as const,
-            comment: "Importé depuis Vinted",
-            imageUrl: annonce.imageUrl
-          };
-          
-          const validatedData = insertArticleSchema.parse(articleData);
-          const article = await storage.createArticle(validatedData);
-          importedArticles.push(article);
-          
-        } catch (error) {
-          console.error(`Erreur lors de l'import d'une annonce: ${annonce.title}`, error);
-        }
-      }
-      
-      res.json({ 
-        message: `${importedArticles.length} annonces importées avec succès`,
-        importedCount: importedArticles.length,
-        articles: importedArticles
-      });
-      
-    } catch (error) {
-      console.error("Erreur lors de l'import Vinted:", error);
-      res.status(500).json({ 
-        message: error instanceof Error ? error.message : "Erreur lors de l'import des annonces Vinted" 
-      });
-    }
-  });
+
 
   const httpServer = createServer(app);
   return httpServer;
