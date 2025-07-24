@@ -10,6 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import ArticleCard from "@/components/articles/ArticleCard";
 import AddArticleModal from "@/components/articles/AddArticleModal";
+import EditArticleModal from "@/components/articles/EditArticleModal";
 
 import { createArticle, deleteArticle, updateArticle, type Article } from "@/lib/api";
 
@@ -19,6 +20,8 @@ interface ArticleManagementProps {
 
 export default function ArticleManagement({ onNavigateToDescriptionGenerator }: ArticleManagementProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [brandFilter, setBrandFilter] = useState("");
@@ -135,11 +138,8 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
   };
 
   const handleEditArticle = (article: Article) => {
-    // Créer un formulaire d'édition rapide
-    const newName = prompt("Nouveau nom de l'article:", article.name);
-    if (newName && newName !== article.name) {
-      updateMutation.mutate({ id: article.id, data: { name: newName } });
-    }
+    setSelectedArticle(article);
+    setEditModalOpen(true);
   };
 
   const handleGenerateDescription = async (article: Article) => {
@@ -514,6 +514,15 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
         onSubmit={handleCreateArticle}
       />
 
+      {/* Modal d'édition d'article */}
+      <EditArticleModal
+        article={selectedArticle}
+        isOpen={editModalOpen}
+        onClose={() => {
+          setEditModalOpen(false);
+          setSelectedArticle(null);
+        }}
+      />
 
     </div>
   );

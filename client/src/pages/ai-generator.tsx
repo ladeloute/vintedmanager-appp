@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation } from "@tanstack/react-query";
-import { Sparkles, Upload, Copy, RefreshCw, Heading, FileText } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Sparkles, Upload, Copy, RefreshCw, Heading, FileText, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { generateDescription, type GeneratedContent } from "@/lib/api";
+import { generateDescription, createArticle, type GeneratedContent } from "@/lib/api";
 
 const generatorSchema = z.object({
   price: z.string().min(1, "Le prix est requis"),
@@ -27,6 +27,7 @@ export default function AIGenerator() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [generatedContent, setGeneratedContent] = useState<GeneratedContent | null>(null);
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   const form = useForm<GeneratorForm>({
     resolver: zodResolver(generatorSchema),
@@ -66,6 +67,40 @@ export default function AIGenerator() {
       toast({
         title: "Erreur",
         description: error instanceof Error ? error.message : "Erreur lors de la génération",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const addToTableMutation = useMutation({
+    mutationFn: async () => {
+      if (!selectedImage || !generatedContent) {
+        throw new Error("Données manquantes pour créer l'article");
+      }
+
+      const formData = new FormData();
+      formData.append("image", selectedImage);
+      formData.append("name", generatedContent.title);
+      formData.append("brand", form.getValues("brand"));
+      formData.append("size", form.getValues("size"));
+      formData.append("price", form.getValues("price"));
+      formData.append("status", "non-vendu");
+      formData.append("comment", form.getValues("comment") || "");
+
+      return createArticle(formData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/articles"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/dashboard-stats"] });
+      toast({
+        title: "Article ajouté !",
+        description: "L'article a été ajouté à votre inventaire avec le statut 'non-vendu'",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Erreur",
+        description: error instanceof Error ? error.message : "Erreur lors de l'ajout à l'inventaire",
         variant: "destructive",
       });
     },
@@ -381,6 +416,33 @@ export default function AIGenerator() {
                       {generatedContent.description}
                     </div>
                   </div>
+                </div>
+
+                {/* Bouton Ajouter au tableau */}
+                <div className="text-center">
+                  <div className="relative group/add">
+                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-green-600 rounded-2xl blur opacity-60 group-hover/add:opacity-80 transition-all duration-500"></div>
+                    <Button
+                      onClick={() => addToTableMutation.mutate()}
+                      disabled={addToTableMutation.isPending}
+                      className="relative bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white px-8 py-4 rounded-xl border border-white/20 backdrop-blur-xl font-bold text-lg transition-all duration-500 group-hover/add:scale-105"
+                    >
+                      {addToTableMutation.isPending ? (
+                        <>
+                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3"></div>
+                          Ajout en cours...
+                        </>
+                      ) : (
+                        <>
+                          <Plus className="w-5 h-5 mr-3" />
+                          Ajouter au tableau
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                  <p className="text-white/60 text-sm mt-3">
+                    L'article sera ajouté à votre inventaire avec le statut "non-vendu"
+                  </p>
                 </div>
               </div>
             )}

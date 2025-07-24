@@ -49,6 +49,11 @@ export async function updateArticle(id: number, data: Partial<Article>): Promise
   return response.json();
 }
 
+export async function updateArticleWithImage(id: number, formData: FormData): Promise<Article> {
+  const response = await apiRequest("PUT", `/api/articles/${id}`, formData);
+  return response.json();
+}
+
 export async function deleteArticle(id: number): Promise<void> {
   await apiRequest("DELETE", `/api/articles/${id}`);
 }

@@ -70,12 +70,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // PUT and PATCH for article updates
-  app.put("/api/articles/:id", async (req, res) => {
+  // PUT for article updates with FormData (including image)
+  app.put("/api/articles/:id", upload.any(), async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      const updateData = req.body;
       
+      console.log("Update article - Raw request body:", req.body);
+      console.log("Update article - Request files:", req.files ? req.files.length : 0);
+      
+      // Extract data from the parsed form
+      const cleanData = {
+        name: req.body.name || "",
+        brand: req.body.brand || "",
+        size: req.body.size || "",
+        price: req.body.price || "",
+        status: req.body.status || "non-vendu",
+        comment: req.body.comment || ""
+      };
+      
+      console.log("Update article - Cleaned form data:", cleanData);
+      
+      // Find the image file if uploaded
+      const imageFile = Array.isArray(req.files) ? req.files.find(f => f.fieldname === 'image') : null;
+      
+      // Add image URL if file was uploaded
+      const updateData = {
+        ...cleanData,
+        ...(imageFile && { imageUrl: `/uploads/${imageFile.filename}` })
+      };
+
       const article = await storage.updateArticle(id, updateData);
       if (!article) {
         return res.status(404).json({ message: "Article non trouvé" });
@@ -83,6 +106,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(article);
     } catch (error) {
+      console.error("Update article error:", error);
       res.status(500).json({ message: "Erreur lors de la mise à jour de l'article" });
     }
   });
