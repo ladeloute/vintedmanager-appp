@@ -1,0 +1,284 @@
+=> Cloning from https://github.com/ladeloute/vintedmanager-appp
+==> Checking out commit cdfa3df8dbca596577ba2203c54facc5d716ac9c in branch main
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 820B done
+#1 DONE 0.0s
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+#2 ...
+#3 [auth] library/node:pull render-prod/docker-mirror-repository/library/node:pull token for us-west1-docker.pkg.dev
+#3 DONE 0.0s
+#2 [internal] load metadata for docker.io/library/node:20-alpine
+#2 DONE 0.7s
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+#5 [1/8] FROM docker.io/library/node:20-alpine@sha256:df02558528d3d3d0d621f112e232611aecfee7cbc654f6b375765f72bb262799
+#5 resolve docker.io/library/node:20-alpine@sha256:df02558528d3d3d0d621f112e232611aecfee7cbc654f6b375765f72bb262799 done
+#5 ...
+#6 [internal] load build context
+#6 transferring context: 53.43MB 0.7s done
+#6 DONE 0.7s
+#5 [1/8] FROM docker.io/library/node:20-alpine@sha256:df02558528d3d3d0d621f112e232611aecfee7cbc654f6b375765f72bb262799
+#5 extracting sha256:9824c27679d3b27c5e1cb00a73adb6f4f8d556994111c12db3c5d61a0c843df8 0.1s done
+#5 extracting sha256:8c59d92d6fc9f01af4aaa86824be72b74bd4d940c4c46aa95d9710bfa46c975e
+#5 extracting sha256:8c59d92d6fc9f01af4aaa86824be72b74bd4d940c4c46aa95d9710bfa46c975e 1.6s done
+#5 DONE 3.4s
+#5 [1/8] FROM docker.io/library/node:20-alpine@sha256:df02558528d3d3d0d621f112e232611aecfee7cbc654f6b375765f72bb262799
+#5 extracting sha256:54225bd601967a0aa669ec9be621c24d8eeac874b698d55874018070898685c2 0.1s done
+#5 extracting sha256:a9e48ad1219d4d11c6456a8db0fd5c11af46242d52edf84e17ab84a7bfd93809 0.0s done
+#5 DONE 3.5s
+#7 [2/8] RUN apk add --no-cache     chromium     nss     freetype     freetype-dev     harfbuzz     ca-certificates     ttf-freefont
+#7 0.046 fetch https://dl-cdn.alpinelinux.org/alpine/v3.22/main/x86_64/APKINDEX.tar.gz
+#7 0.141 fetch https://dl-cdn.alpinelinux.org/alpine/v3.22/community/x86_64/APKINDEX.tar.gz
+#7 0.426 (1/187) Installing ca-certificates (20250619-r0)
+#7 0.458 (2/187) Installing libexpat (2.7.1-r0)
+#7 0.468 (3/187) Installing brotli-libs (1.1.0-r2)
+#7 0.482 (4/187) Installing libbz2 (1.0.8-r6)
+#7 0.490 (5/187) Installing libpng (1.6.47-r0)
+#7 0.499 (6/187) Installing freetype (2.13.3-r0)
+#7 0.511 (7/187) Installing fontconfig (2.15.0-r3)
+#7 0.531 (8/187) Installing libfontenc (1.1.8-r0)
+#7 0.539 (9/187) Installing mkfontscale (1.2.3-r1)
+#7 0.548 (10/187) Installing font-opensans (0_git20210927-r1)
+#7 0.578 (11/187) Installing libffi (3.4.8-r0)
+#7 0.586 (12/187) Installing libintl (0.24.1-r0)
+#7 0.594 (13/187) Installing libeconf (0.6.3-r0)
+#7 0.603 (14/187) Installing libblkid (2.41-r9)
+#7 0.612 (15/187) Installing libmount (2.41-r9)
+#7 0.622 (16/187) Installing pcre2 (10.43-r1)
+#7 0.634 (17/187) Installing glib (2.84.3-r0)
+#7 0.674 (18/187) Installing gobject-introspection (1.84.0-r0)
+#7 0.685 (19/187) Installing pkgconf (2.4.3-r0)
+#7 0.694 (20/187) Installing hicolor-icon-theme (0.18-r0)
+#7 0.731 (21/187) Installing xz-libs (5.8.1-r0)
+#7 0.740 (22/187) Installing libxml2 (2.13.8-r0)
+#7 0.754 (23/187) Installing shared-mime-info (2.4-r6)
+#7 0.774 (24/187) Installing libjpeg-turbo (3.1.0-r0)
+#7 0.785 (25/187) Installing libsharpyuv (1.5.0-r0)
+#7 0.793 (26/187) Installing libwebp (1.5.0-r0)
+#7 0.805 (27/187) Installing zstd-libs (1.5.7-r0)
+#7 0.818 (28/187) Installing tiff (4.7.0-r0)
+#7 0.828 (29/187) Installing gdk-pixbuf (2.42.12-r1)
+#7 0.840 (30/187) Installing gtk-update-icon-cache (3.24.49-r1)
+#7 0.848 (31/187) Installing libxau (1.0.12-r0)
+#7 0.855 (32/187) Installing libmd (1.1.0-r0)
+#7 0.864 (33/187) Installing libbsd (0.12.2-r0)
+#7 0.872 (34/187) Installing libxdmcp (1.1.5-r1)
+#7 0.879 (35/187) Installing libxcb (1.17.0-r0)
+#7 0.896 (36/187) Installing libx11 (1.8.11-r0)
+#7 0.932 (37/187) Installing libxcomposite (0.4.6-r5)
+#7 0.940 (38/187) Installing libxfixes (6.0.1-r4)
+#7 0.950 (39/187) Installing libxrender (0.9.12-r0)
+#7 0.958 (40/187) Installing libxcursor (1.2.3-r0)
+#7 0.966 (41/187) Installing libxdamage (1.1.6-r5)
+#7 0.974 (42/187) Installing libxext (1.3.6-r2)
+#7 0.982 (43/187) Installing libxi (1.8.2-r0)
+#7 0.990 (44/187) Installing libxinerama (1.1.5-r4)
+#7 0.998 (45/187) Installing libxrandr (1.5.4-r1)
+#7 1.006 (46/187) Installing libatk-1.0 (2.56.3-r0)
+#7 1.015 (47/187) Installing dbus-libs (1.16.2-r1)
+#7 1.025 (48/187) Installing at-spi2-core-libs (2.56.3-r0)
+#7 1.035 (49/187) Installing libxtst (1.2.5-r0)
+#7 1.042 (50/187) Installing at-spi2-core (2.56.3-r0)
+#7 1.052 (51/187) Installing libatk-bridge-2.0 (2.56.3-r0)
+#7 1.061 (52/187) Installing pixman (0.46.4-r0)
+#7 1.074 (53/187) Installing cairo (1.18.4-r0)
+#7 1.089 (54/187) Installing cairo-gobject (1.18.4-r0)
+#7 1.097 (55/187) Installing avahi-libs (0.8-r21)
+#7 1.106 (56/187) Installing gmp (6.3.0-r3)
+#7 1.116 (57/187) Installing nettle (3.10.1-r0)
+#7 1.128 (58/187) Installing libunistring (1.3-r0)
+#7 1.144 (59/187) Installing libidn2 (2.3.7-r0)
+#7 1.153 (60/187) Installing libtasn1 (4.20.0-r0)
+#7 1.162 (61/187) Installing p11-kit (0.25.5-r2)
+#7 1.176 (62/187) Installing gnutls (3.8.8-r0)
+#7 1.194 (63/187) Installing cups-libs (2.4.11-r0)
+#7 1.205 (64/187) Installing libepoxy (1.5.10-r1)
+#7 1.218 (65/187) Installing fribidi (1.0.16-r1)
+#7 1.226 (66/187) Installing graphite2 (1.3.14-r6)
+#7 1.235 (67/187) Installing harfbuzz (11.2.1-r0)
+#7 1.251 (68/187) Installing libxft (2.3.8-r3)
+#7 1.260 (69/187) Installing pango (1.56.3-r0)
+#7 1.273 (70/187) Installing wayland-libs-client (1.23.1-r3)
+#7 1.280 (71/187) Installing wayland-libs-cursor (1.23.1-r3)
+#7 1.288 (72/187) Installing wayland-libs-egl (1.23.1-r3)
+#7 1.297 (73/187) Installing xkeyboard-config (2.43-r0)
+#7 1.341 (74/187) Installing libxkbcommon (1.8.1-r2)
+#7 1.352 (75/187) Installing gtk+3.0 (3.24.49-r1)
+#7 1.418 (76/187) Installing icu-data-full (76.1-r1)
+#7 1.593 (77/187) Installing llvm20-libs (20.1.8-r0)
+#7 2.546 (78/187) Installing spirv-tools (1.4.313.0-r0)
+#7 2.581 (79/187) Installing hwdata-pci (0.395-r0)
+#7 2.597 (80/187) Installing libpciaccess (0.18.1-r0)
+#7 2.605 (81/187) Installing libdrm (2.4.124-r0)
+#7 2.619 (82/187) Installing libelf (0.193-r0)
+#7 2.628 (83/187) Installing wayland-libs-server (1.23.1-r3)
+#7 2.636 (84/187) Installing libxshmfence (1.3.3-r0)
+#7 2.644 (85/187) Installing mesa (25.1.6-r0)
+#7 3.269 (86/187) Installing mesa-gbm (25.1.6-r0)
+#7 3.277 (87/187) Installing mesa-dri-gallium (25.1.6-r0)
+#7 3.285 (88/187) Installing eudev-libs (3.2.14-r5)
+#7 3.293 (89/187) Installing libmagic (5.46-r2)
+#7 3.327 (90/187) Installing file (5.46-r2)
+#7 3.336 (91/187) Installing xprop (1.2.8-r0)
+#7 3.344 (92/187) Installing libice (1.1.2-r0)
+#7 3.352 (93/187) Installing libuuid (2.41-r9)
+#7 3.360 (94/187) Installing libsm (1.2.5-r0)
+#7 3.368 (95/187) Installing libxt (1.3.1-r0)
+#7 3.379 (96/187) Installing libxmu (1.2.1-r0)
+#7 3.387 (97/187) Installing xset (1.2.5-r1)
+#7 3.396 (98/187) Installing xdg-utils (1.2.1-r1)
+#7 3.406 (99/187) Installing libogg (1.3.5-r5)
+#7 3.414 (100/187) Installing libflac (1.4.3-r1)
+#7 3.426 (101/187) Installing alsa-lib (1.2.14-r0)
+#7 3.448 (102/187) Installing libSvtAv1Enc (2.3.0-r0)
+#7 3.500 (103/187) Installing aom-libs (3.12.1-r0)
+#7 3.550 (104/187) Installing libva (2.22.0-r1)
+#7 3.560 (105/187) Installing libvdpau (1.5-r4)
+#7 3.568 (106/187) Installing onevpl-libs (2023.3.1-r2)
+#7 3.578 (107/187) Installing ffmpeg-libavutil (6.1.2-r2)
+#7 3.593 (108/187) Installing libdav1d (1.5.1-r0)
+#7 3.611 (109/187) Installing openexr-libiex (3.3.2-r0)
+#7 3.621 (110/187) Installing openexr-libilmthread (3.3.2-r0)
+#7 3.629 (111/187) Installing imath (3.1.12-r0)
+#7 3.638 (112/187) Installing libdeflate (1.23-r0)
+#7 3.647 (113/187) Installing openexr-libopenexrcore (3.3.2-r0)
+#7 3.664 (114/187) Installing openexr-libopenexr (3.3.2-r0)
+#7 3.682 (115/187) Installing giflib (5.2.2-r1)
+#7 3.690 (116/187) Installing libhwy (1.0.7-r1)
+#7 3.698 (117/187) Installing lcms2 (2.16-r0)
+#7 3.709 (118/187) Installing libjxl (0.10.3-r2)
+#7 3.740 (119/187) Installing lame-libs (3.100-r5)
+#7 3.750 (120/187) Installing opus (1.5.2-r1)
+#7 3.762 (121/187) Installing rav1e-libs (0.7.1-r0)
+#7 3.783 (122/187) Installing libgomp (14.2.0-r6)
+#7 3.793 (123/187) Installing soxr (0.1.3-r7)
+#7 3.802 (124/187) Installing ffmpeg-libswresample (6.1.2-r2)
+#7 3.810 (125/187) Installing libtheora (1.1.1-r18)
+#7 3.824 (126/187) Installing libvorbis (1.3.7-r2)
+#7 3.837 (127/187) Installing libvpx (1.15.0-r0)
+#7 3.864 (128/187) Installing libwebpmux (1.5.0-r0)
+#7 3.872 (129/187) Installing x264-libs (0.164.3108-r0)
+#7 3.894 (130/187) Installing numactl (2.0.18-r0)
+#7 3.902 (131/187) Installing x265-libs (3.6-r0)
+#7 3.973 (132/187) Installing xvidcore (1.3.7-r2)
+#7 3.993 (133/187) Installing ffmpeg-libavcodec (6.1.2-r2)
+#7 4.090 (134/187) Installing libbluray (1.3.4-r1)
+#7 4.102 (135/187) Installing mpg123-libs (1.32.10-r0)
+#7 4.114 (136/187) Installing libopenmpt (0.7.15-r0)
+#7 4.130 (137/187) Installing cjson (1.7.18-r1)
+#7 4.138 (138/187) Installing mbedtls (3.6.4-r0)
+#7 4.153 (139/187) Installing librist (0.2.10-r1)
+#7 4.164 (140/187) Installing libsrt (1.5.3-r1)
+#7 4.181 (141/187) Installing libssh (0.11.2-r0)
+#7 4.192 (142/187) Installing libsodium (1.0.20-r0)
+#7 4.204 (143/187) Installing libzmq (4.3.5-r2)
+#7 4.216 (144/187) Installing ffmpeg-libavformat (6.1.2-r2)
+#7 4.241 (145/187) Installing crc32c (1.1.2-r2)
+#7 4.249 (146/187) Installing double-conversion (3.3.1-r0)
+#7 4.257 (147/187) Installing harfbuzz-subset (11.2.1-r0)
+#7 4.273 (148/187) Installing minizip (1.3.1-r0)
+#7 4.281 (149/187) Installing nspr (4.36-r0)
+#7 4.291 (150/187) Installing sqlite-libs (3.49.2-r1)
+#7 4.309 (151/187) Installing nss (3.112-r0)
+#7 4.341 (152/187) Installing openh264 (2.6.0-r0)
+#7 4.358 (153/187) Installing libcamera-ipa (0.5.1-r0)
+#7 4.368 (154/187) Installing libunwind (1.8.1-r0)
+#7 4.378 (155/187) Installing yaml (0.2.5-r2)
+#7 4.386 (156/187) Installing libcamera (0.5.1-r0)
+#7 4.405 (157/187) Installing serd-libs (0.32.4-r0)
+#7 4.413 (158/187) Installing zix-libs (0.6.2-r0)
+#7 4.423 (159/187) Installing sord-libs (0.16.18-r0)
+#7 4.431 (160/187) Installing sratom (0.6.18-r0)
+#7 4.439 (161/187) Installing lilv-libs (0.24.26-r0)
+#7 4.448 (162/187) Installing speexdsp (1.2.1-r2)
+#7 4.456 (163/187) Installing libuv (1.51.0-r0)
+#7 4.466 (164/187) Installing roc-toolkit-libs (0.4.0-r1)
+#7 4.481 (165/187) Installing libsndfile (1.2.2-r2)
+#7 4.493 (166/187) Installing abseil-cpp-raw-logging-internal (20240722.1-r1)
+#7 4.502 (167/187) Installing abseil-cpp-strings-internal (20240722.1-r1)
+#7 4.509 (168/187) Installing abseil-cpp-strings (20240722.1-r1)
+#7 4.518 (169/187) Installing webrtc-audio-processing-2 (2.1-r0)
+#7 4.532 (170/187) Installing pipewire-libs (1.4.7-r0)
+#7 4.583 (171/187) Installing libasyncns (0.8-r4)
+#7 4.592 (172/187) Installing libltdl (2.5.4-r1)
+#7 4.600 (173/187) Installing orc (0.4.40-r1)
+#7 4.611 (174/187) Installing tdb-libs (1.4.12-r0)
+#7 4.620 (175/187) Installing libpulse (17.0-r5)
+#7 4.637 (176/187) Installing simdutf (7.2.1-r0)
+#7 4.648 (177/187) Installing libwebpdemux (1.5.0-r0)
+#7 4.656 (178/187) Installing libxslt (1.1.43-r3)
+#7 4.667 (179/187) Installing chromium (138.0.7204.157-r0)
+#7 6.092 (180/187) Installing bzip2-dev (1.0.8-r6)
+#7 6.100 (181/187) Installing brotli (1.1.0-r2)
+#7 6.108 (182/187) Installing brotli-dev (1.1.0-r2)
+#7 6.118 (183/187) Installing zlib-dev (1.3.1-r2)
+#7 6.126 (184/187) Installing libpng-dev (1.6.47-r0)
+#7 6.136 (185/187) Installing freetype-dev (2.13.3-r0)
+#7 6.157 (186/187) Installing encodings (1.0.7-r1)
+#7 6.175 (187/187) Installing font-freefont (20120503-r4)
+#7 6.231 Executing busybox-1.37.0-r18.trigger
+#7 6.239 Executing ca-certificates-20250619-r0.trigger
+#7 6.278 Executing fontconfig-2.15.0-r3.trigger
+#7 6.312 Executing mkfontscale-1.2.3-r1.trigger
+#7 6.365 Executing glib-2.84.3-r0.trigger
+#7 6.372 Executing shared-mime-info-2.4-r6.trigger
+#7 6.784 Executing gdk-pixbuf-2.42.12-r1.trigger
+#7 6.792 Executing gtk-update-icon-cache-3.24.49-r1.trigger
+#7 6.819 Executing gtk+3.0-3.24.49-r1.trigger
+#7 6.837 OK: 784 MiB in 205 packages
+#7 DONE 12.3s
+#8 [3/8] WORKDIR /app
+#8 DONE 0.1s
+#9 [4/8] COPY package*.json ./
+#9 DONE 0.0s
+#10 [5/8] RUN npm ci --only=production
+#10 0.169 npm warn config only Use `--omit=dev` to omit dev dependencies from the install.
+#10 7.368 
+#10 7.368 added 546 packages, and audited 547 packages in 7s
+#10 7.368 
+#10 7.368 77 packages are looking for funding
+#10 7.368   run `npm fund` for details
+#10 7.371 
+#10 7.371 4 vulnerabilities (3 low, 1 high)
+#10 7.371 
+#10 7.371 To address issues that do not require attention, run:
+#10 7.371   npm audit fix
+#10 7.371 
+#10 7.371 Some issues need review, and may require choosing
+#10 7.371 a different dependency.
+#10 7.371 
+#10 7.371 Run `npm audit` for details.
+#10 7.372 npm notice
+#10 7.372 npm notice New major version of npm available! 10.8.2 -> 11.5.1
+#10 7.372 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.5.1
+#10 7.372 npm notice To update run: npm install -g npm@11.5.1
+#10 7.372 npm notice
+#10 DONE 9.9s
+#11 [6/8] COPY . .
+#11 DONE 0.5s
+#12 [7/8] RUN npm run build
+#12 0.194 
+#12 0.194 > rest-express@1.0.0 build
+#12 0.194 > vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+#12 0.194 
+#12 0.199 sh: vite: not found
+#12 ERROR: process "/bin/sh -c npm run build" did not complete successfully: exit code: 127
+------
+ > [7/8] RUN npm run build:
+0.194 
+0.194 > rest-express@1.0.0 build
+0.194 > vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+0.194 
+0.199 sh: vite: not found
+------
+Dockerfile:31
+--------------------
+  29 |     
+  30 |     # Construire l'application
+  31 | >>> RUN npm run build
+  32 |     
+  33 |     # Créer le dossier uploads
+--------------------
+error: failed to solve: process "/bin/sh -c npm run build" did not complete successfully: exit code: 127
+error: exit status 1
