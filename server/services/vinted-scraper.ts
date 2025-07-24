@@ -1,4 +1,3 @@
-// Service pour récupérer les annonces Vinted d'un profil public
 export interface VintedAnnonce {
   title: string;
   price: string;
@@ -9,147 +8,208 @@ export interface VintedAnnonce {
 
 export async function getVintedAnnonces(profileUrl: string): Promise<VintedAnnonce[]> {
   try {
-    console.log(`Récupération automatique des annonces depuis: ${profileUrl}`);
+    console.log(`🔍 Récupération automatique des annonces depuis: ${profileUrl}`);
     
-    const userId = extractUserIdFromUrl(profileUrl);
-    if (!userId) {
-      throw new Error('Impossible d\'extraire l\'ID utilisateur depuis l\'URL');
-    }
-
-    // Essayer plusieurs méthodes d'API Vinted
+    // Essayer plusieurs méthodes de scraping avec délai respectueux
     const methods = [
-      () => getVintedAPIv2(userId),
-      () => getVintedAPIv1(userId),
-      () => getVintedProfileData(profileUrl),
-      () => getVintedWithProxy(profileUrl)
+      () => scrapWithPuppeteer(profileUrl),
+      () => scrapWithCheerio(profileUrl),
+      () => scrapWithAxios(profileUrl)
     ];
 
     for (const method of methods) {
       try {
+        console.log('🔧 Essai d\'une méthode de scraping...');
         const annonces = await method();
         if (annonces.length > 0) {
-          console.log(`${annonces.length} annonces récupérées automatiquement`);
+          console.log(`✅ ${annonces.length} annonces récupérées avec succès`);
           return annonces;
         }
       } catch (methodError) {
-        console.log('Méthode échouée, essai suivant...');
+        console.log('⚠️ Méthode échouée, tentative suivante...');
+        // Délai respectueux entre les tentatives
+        await new Promise(resolve => setTimeout(resolve, 1000));
       }
     }
 
-    // Si toutes les méthodes échouent, utiliser les données du profil
-    console.log('Import automatique - utilisation des données du profil public');
-    return await getVintedPublicData(userId);
+    throw new Error('Toutes les méthodes de scraping ont échoué');
     
   } catch (error) {
-    console.error('Erreur lors de la récupération automatique:', error);
+    console.error('❌ Erreur lors du scraping Vinted:', error);
     throw new Error('Import automatique échoué: ' + (error instanceof Error ? error.message : 'Erreur inconnue'));
   }
 }
 
-async function getVintedAPIv2(userId: string): Promise<VintedAnnonce[]> {
-  const apiUrl = `https://www.vinted.fr/api/v2/users/${userId}/items?page=1&per_page=20`;
+// Méthode 1: Puppeteer pour navigateur complet avec JavaScript
+async function scrapWithPuppeteer(profileUrl: string): Promise<VintedAnnonce[]> {
+  const puppeteer = await import('puppeteer');
+  console.log('🤖 Lancement de Puppeteer...');
   
-  const response = await fetch(apiUrl, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-      'Accept': 'application/json',
-      'Referer': 'https://www.vinted.fr/',
-      'X-Requested-With': 'XMLHttpRequest'
-    }
+  const browser = await puppeteer.default.launch({
+    headless: true,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-accelerated-2d-canvas',
+      '--no-first-run',
+      '--no-zygote',
+      '--disable-gpu'
+    ]
   });
-  
-  if (!response.ok) {
-    throw new Error(`API v2 Error: ${response.status}`);
+
+  try {
+    const page = await browser.newPage();
+    
+    // User agent respectueux
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+    await page.setViewport({ width: 1920, height: 1080 });
+    
+    console.log('📄 Chargement de la page...');
+    await page.goto(profileUrl, { 
+      waitUntil: 'networkidle2',
+      timeout: 30000 
+    });
+
+    // Attendre le chargement des articles
+    await page.waitForSelector('.feed-grid', { timeout: 10000 });
+    
+    console.log('🔍 Extraction des données...');
+    const annonces = await page.evaluate(() => {
+      const articles: any[] = [];
+      const itemElements = document.querySelectorAll('.feed-grid .feed-grid__item');
+      
+      itemElements.forEach((item, index) => {
+        if (index >= 20) return; // Limiter à 20 articles max
+        
+        try {
+          const titleElement = item.querySelector('[data-testid="item-title"]') || 
+                              item.querySelector('.ItemBox_overlay__1kNfX a') ||
+                              item.querySelector('a[title]');
+          
+          const priceElement = item.querySelector('[data-testid="item-price"]') || 
+                              item.querySelector('.ItemBox_price__X9NTr') ||
+                              item.querySelector('.web_ui__Text__text');
+          
+          const imageElement = item.querySelector('img[src*="images.vinted.net"]') as HTMLImageElement;
+          
+          const linkElement = item.querySelector('a[href*="/items/"]') as HTMLAnchorElement;
+          
+          if (titleElement && priceElement && imageElement) {
+            const title = titleElement.textContent?.trim() || '';
+            const priceText = priceElement.textContent?.trim() || '';
+            const price = priceText.replace(/[^\d,]/g, '').replace(',', '.');
+            
+            // Extraire taille et marque du titre si possible
+            const titleParts = title.split(' ');
+            const possibleSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '34', '36', '38', '40', '42', '44', '46', '48'];
+            const foundSize = titleParts.find(part => possibleSizes.includes(part.toUpperCase()));
+            
+            articles.push({
+              title: title,
+              price: price,
+              size: foundSize || 'Taille unique',
+              brand: titleParts[0] || 'Marque inconnue',
+              imageUrl: imageElement.src
+            });
+          }
+        } catch (e) {
+          console.log('Erreur extraction article:', e);
+        }
+      });
+      
+      return articles;
+    });
+
+    console.log(`📦 ${annonces.length} annonces extraites avec Puppeteer`);
+    return annonces;
+    
+  } finally {
+    await browser.close();
   }
-  
-  const data = await response.json();
-  return parseVintedItems(data.items || []);
 }
 
-async function getVintedAPIv1(userId: string): Promise<VintedAnnonce[]> {
-  const apiUrl = `https://www.vinted.fr/api/v1/users/${userId}/items`;
+// Méthode 2: Cheerio avec axios pour le HTML statique
+async function scrapWithCheerio(profileUrl: string): Promise<VintedAnnonce[]> {
+  const axios = await import('axios');
+  const { load } = await import('cheerio');
   
-  const response = await fetch(apiUrl, {
-    headers: {
-      'User-Agent': 'VintedMobileApp',
-      'Accept': 'application/json',
-    }
-  });
+  console.log('🔧 Scraping avec Cheerio...');
   
-  if (!response.ok) {
-    throw new Error(`API v1 Error: ${response.status}`);
-  }
-  
-  const data = await response.json();
-  return parseVintedItems(data.items || []);
-}
-
-async function getVintedProfileData(profileUrl: string): Promise<VintedAnnonce[]> {
-  const response = await fetch(profileUrl, {
+  const response = await axios.default.get(profileUrl, {
     headers: {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
       'Accept-Language': 'fr-FR,fr;q=0.9,en;q=0.8',
-    }
+      'Accept-Encoding': 'gzip, deflate, br'
+    },
+    timeout: 15000
   });
 
-  if (!response.ok) {
-    throw new Error(`Profile Error: ${response.status}`);
-  }
-
-  const html = await response.text();
-  
-  // Chercher les données JSON dans le script
-  const jsonDataRegex = /window\.App\s*=\s*({.*?});/;
-  const match = html.match(jsonDataRegex);
-  
-  if (match) {
-    try {
-      const appData = JSON.parse(match[1]);
-      if (appData.items) {
-        return parseVintedItems(appData.items);
-      }
-    } catch (e) {
-      console.log('Erreur parsing JSON:', e);
-    }
-  }
-  
-  return extractAnnoncesFromHTML(html);
-}
-
-async function getVintedWithProxy(profileUrl: string): Promise<VintedAnnonce[]> {
-  // Utiliser un service proxy simple pour contourner les restrictions
-  const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(profileUrl)}`;
-  
-  const response = await fetch(proxyUrl);
-  if (!response.ok) {
-    throw new Error(`Proxy Error: ${response.status}`);
-  }
-  
-  const data = await response.json();
-  return extractAnnoncesFromHTML(data.contents);
-}
-
-async function getVintedPublicData(userId: string): Promise<VintedAnnonce[]> {
-  throw new Error('Import automatique Vinted impossible: Vinted protège ses données avec des mesures anti-scraping. L\'extraction automatique nécessiterait un navigateur complet (Puppeteer/Selenium) qui n\'est pas disponible dans cet environnement.');
-}
-
-function parseVintedItems(items: any[]): VintedAnnonce[] {
+  const $ = load(response.data);
   const annonces: VintedAnnonce[] = [];
   
-  items.forEach((item: any) => {
-    if (item.title && item.price && item.photos && item.photos.length > 0) {
-      annonces.push({
-        title: item.title.trim(),
-        price: formatPrice(item.price),
-        size: item.size_title || 'Taille unique',
-        brand: item.brand_title || 'Sans marque',
-        imageUrl: item.photos[0].high_resolution?.url || item.photos[0].url
-      });
+  // Rechercher les données JSON dans le script
+  $('script').each((i: number, script: any) => {
+    const content = $(script).html();
+    if (content && content.includes('window.App')) {
+      try {
+        const match = content.match(/window\.App\s*=\s*({.*?});/);
+        if (match) {
+          const appData = JSON.parse(match[1]);
+          if (appData.items) {
+            appData.items.slice(0, 20).forEach((item: any) => {
+              if (item.title && item.price) {
+                annonces.push({
+                  title: item.title.trim(),
+                  price: formatPrice(item.price),
+                  size: item.size_title || 'Taille unique',
+                  brand: item.brand_title || 'Marque inconnue',
+                  imageUrl: item.photos?.[0]?.high_resolution?.url || item.photos?.[0]?.url || ''
+                });
+              }
+            });
+          }
+        }
+      } catch (e) {
+        // Ignorer les erreurs de parsing JSON
+      }
     }
   });
   
+  console.log(`📦 ${annonces.length} annonces extraites avec Cheerio`);
   return annonces;
+}
+
+// Méthode 3: Axios simple avec extraction de base
+async function scrapWithAxios(profileUrl: string): Promise<VintedAnnonce[]> {
+  const axios = await import('axios');
+  
+  console.log('🌐 Scraping avec Axios...');
+  
+  const response = await axios.default.get(profileUrl, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    },
+    timeout: 10000
+  });
+
+  return extractAnnoncesFromHTML(response.data);
+}
+
+// Fonction utilitaire pour formater le prix
+function formatPrice(price: any): string {
+  if (typeof price === 'string') {
+    return price.replace(/[^\d,]/g, '').replace(',', '.');
+  }
+  if (typeof price === 'number') {
+    return price.toString();
+  }
+  if (price && price.amount) {
+    return price.amount.toString();
+  }
+  return '0';
 }
 
 function extractUserIdFromUrl(url: string): string | null {
@@ -157,108 +217,52 @@ function extractUserIdFromUrl(url: string): string | null {
   return match ? match[1] : null;
 }
 
-async function getVintedAPI(userId: string): Promise<VintedAnnonce[]> {
-  const apiUrl = `https://www.vinted.fr/api/v2/users/${userId}/items`;
-  
-  const response = await fetch(apiUrl, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-      'Accept': 'application/json, text/plain, */*',
-      'Referer': 'https://www.vinted.fr/',
-    }
-  });
-  
-  if (!response.ok) {
-    throw new Error(`API Error: ${response.status}`);
-  }
-  
-  const data = await response.json();
+function extractAnnoncesFromHTML(html: string): VintedAnnonce[] {
   const annonces: VintedAnnonce[] = [];
   
-  if (data.items && Array.isArray(data.items)) {
-    data.items.forEach((item: any) => {
-      if (item.title && item.price && item.photos && item.photos.length > 0) {
+  // Chercher les données JSON dans window.App
+  const jsonMatch = html.match(/window\.App\s*=\s*({.*?});/);
+  if (jsonMatch) {
+    try {
+      const appData = JSON.parse(jsonMatch[1]);
+      if (appData.items) {
+        appData.items.slice(0, 20).forEach((item: any) => {
+          if (item.title && item.price) {
+            annonces.push({
+              title: item.title.trim(),
+              price: formatPrice(item.price),
+              size: item.size_title || 'Taille unique',
+              brand: item.brand_title || 'Marque inconnue',
+              imageUrl: item.photos?.[0]?.high_resolution?.url || item.photos?.[0]?.url || ''
+            });
+          }
+        });
+      }
+    } catch (e) {
+      console.log('Erreur parsing JSON depuis HTML:', e);
+    }
+  }
+  
+  // Fallback: extraction basique depuis le HTML
+  if (annonces.length === 0) {
+    const itemBoxes = html.match(/<div[^>]*class="[^"]*ItemBox[^"]*"[^>]*>.*?<\/div>/gs) || [];
+    
+    itemBoxes.slice(0, 10).forEach((box, index) => {
+      const titleMatch = box.match(/title="([^"]+)"/);
+      const priceMatch = box.match(/€\s*(\d+(?:,\d+)?)/);
+      const imageMatch = box.match(/src="([^"]*images\.vinted\.net[^"]*)"/);
+      
+      if (titleMatch && priceMatch) {
         annonces.push({
-          title: item.title.trim(),
-          price: formatPrice(item.price),
-          size: item.size_title || 'Taille unique',
-          brand: item.brand_title || 'Sans marque',
-          imageUrl: item.photos[0].high_resolution?.url || item.photos[0].url
+          title: titleMatch[1].trim(),
+          price: priceMatch[1].replace(',', '.'),
+          size: 'Taille unique',
+          brand: 'Marque inconnue',
+          imageUrl: imageMatch?.[1] || ''
         });
       }
     });
   }
   
   return annonces;
-}
-
-
-
-function extractAnnoncesFromHTML(html: string): VintedAnnonce[] {
-  const annonces: VintedAnnonce[] = [];
-  
-  try {
-    // Chercher les données JSON dans le HTML (Vinted utilise des données structurées)
-    const scriptRegex = /<script[^>]*>.*?window\.App\s*=\s*({.*?});.*?<\/script>/;
-    const scriptMatches = html.match(scriptRegex);
-    
-    if (scriptMatches && scriptMatches[1]) {
-      const appData = JSON.parse(scriptMatches[1]);
-      
-      // Parcourir les données pour trouver les articles
-      if (appData.items && Array.isArray(appData.items)) {
-        appData.items.forEach((item: any) => {
-          if (item.title && item.price && item.photos && item.photos.length > 0) {
-            annonces.push({
-              title: item.title.trim(),
-              price: formatPrice(item.price),
-              size: item.size_title || 'Taille unique',
-              brand: item.brand_title || 'Sans marque',
-              imageUrl: item.photos[0].full_size_url || item.photos[0].url
-            });
-          }
-        });
-      }
-    } else {
-      // Fallback: parsing HTML direct si pas de données JSON
-      const itemRegex = /<div[^>]*class="[^"]*item-card[^"]*"[^>]*>.*?<\/div>/g;
-      let match;
-      
-      while ((match = itemRegex.exec(html)) !== null) {
-        const itemHTML = match[0];
-        
-        const titleMatch = itemHTML.match(/title="([^"]+)"/);
-        const priceMatch = itemHTML.match(/([0-9,]+)\s*€/);
-        const imageMatch = itemHTML.match(/src="([^"]+)"/);
-        
-        if (titleMatch && priceMatch && imageMatch) {
-          annonces.push({
-            title: titleMatch[1].trim(),
-            price: priceMatch[1].replace(',', '.'),
-            size: 'Taille unique',
-            brand: 'À définir',
-            imageUrl: imageMatch[1]
-          });
-        }
-      }
-    }
-    
-  } catch (error) {
-    console.error('Erreur lors de l\'extraction des données:', error);
-  }
-  
-  return annonces;
-}
-
-function formatPrice(price: any): string {
-  if (typeof price === 'number') {
-    return price.toString();
-  }
-  if (typeof price === 'string') {
-    return price.replace(',', '.');
-  }
-  if (price && price.amount) {
-    return (price.amount / 100).toString(); // Vinted stocke souvent en centimes
-  }
-  return '0';
 }
