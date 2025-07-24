@@ -10,9 +10,8 @@ export async function getVintedAnnonces(profileUrl: string): Promise<VintedAnnon
   try {
     console.log(`🔍 Récupération automatique des annonces depuis: ${profileUrl}`);
     
-    // Essayer plusieurs méthodes de scraping avec délai respectueux
+    // Essayer plusieurs méthodes de scraping avec délai respectueux (sans Puppeteer pour Vercel)
     const methods = [
-      () => scrapWithPuppeteer(profileUrl),
       () => scrapWithCheerio(profileUrl),
       () => scrapWithAxios(profileUrl)
     ];
