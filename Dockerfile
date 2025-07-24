@@ -21,14 +21,17 @@ WORKDIR /app
 # Copier les fichiers de dépendances
 COPY package*.json ./
 
-# Installer les dépendances
-RUN npm ci --only=production
+# Installer toutes les dépendances (dev incluses pour le build)
+RUN npm ci
 
 # Copier le code source
 COPY . .
 
-# Construire l'application
-RUN npm run build
+# Construire l'application avec notre script custom
+RUN node build-production.js
+
+# Nettoyer les dépendances dev après le build
+RUN npm prune --production
 
 # Créer le dossier uploads
 RUN mkdir -p uploads
@@ -37,4 +40,4 @@ RUN mkdir -p uploads
 EXPOSE $PORT
 
 # Démarrer l'application
-CMD ["npm", "run", "start:production"]
+CMD ["node", "dist/server.js"]
