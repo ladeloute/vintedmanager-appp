@@ -325,16 +325,19 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
                 </div>
               </div>
 
-              {/* Panneau de contrôle quantique */}
-              <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                <div className="lg:col-span-2 space-y-2">
-                  <Label className="text-white/80">Scanner d'articles</Label>
+              {/* Panneau de contrôle quantique premium */}
+              <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 sm:gap-8">
+                <div className="lg:col-span-2 space-y-3">
+                  <Label className="text-white/90 text-base font-medium flex items-center">
+                    <Search className="w-4 h-4 mr-2 text-cyan-400" />
+                    Scanner d'articles
+                  </Label>
                   <div className="relative group/search">
-                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-xl blur"></div>
-                    <div className="relative bg-black/40 backdrop-blur-xl border border-cyan-500/30 rounded-xl">
-                      <Search className="w-5 h-5 absolute left-4 top-4 text-cyan-400" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-xl blur opacity-0 group-hover/search:opacity-100 transition-all duration-500"></div>
+                    <div className="relative bg-black/30 backdrop-blur-xl border border-cyan-500/30 rounded-xl group-hover/search:border-cyan-400/50 transition-all duration-300">
+                      <Search className="w-5 h-5 absolute left-4 top-4 text-cyan-400 group-hover/search:scale-110 transition-all duration-300" />
                       <Input
-                        placeholder="Rechercher dans la base..."
+                        placeholder="Rechercher par nom, marque, taille..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="pl-12 bg-transparent border-0 text-white placeholder:text-white/40 h-12"
