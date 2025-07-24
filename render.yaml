@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: vintedmanager
+    env: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start:production
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+    disk:
+      name: vintedmanager-disk
+      mountPath: /app/uploads
+      sizeGB: 1

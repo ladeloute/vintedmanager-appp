@@ -1,0 +1,12 @@
+# Configuration pour Railway/Nixpacks
+[phases.setup]
+nixPkgs = ['nodejs-20_x', 'python3']
+
+[phases.install]
+cmds = ['npm ci']
+
+[phases.build]
+cmds = ['node build-production.js']
+
+[start]
+cmd = 'node start-production.js'
