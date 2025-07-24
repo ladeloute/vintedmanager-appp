@@ -10,6 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import ArticleCard from "@/components/articles/ArticleCard";
 import AddArticleModal from "@/components/articles/AddArticleModal";
+import VintedImportModal from "@/components/articles/VintedImportModal";
 import { createArticle, deleteArticle, updateArticle, type Article } from "@/lib/api";
 
 interface ArticleManagementProps {
@@ -18,6 +19,7 @@ interface ArticleManagementProps {
 
 export default function ArticleManagement({ onNavigateToDescriptionGenerator }: ArticleManagementProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isVintedImportOpen, setIsVintedImportOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [brandFilter, setBrandFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
@@ -112,47 +114,16 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
     },
   });
 
-  const importVintedMutation = useMutation({
-    mutationFn: async (profileUrl: string) => {
-      const response = await fetch("/api/import-vinted", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ profileUrl }),
-      });
-      
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Erreur lors de l'import");
-      }
-      
-      return response.json();
-    },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["/api/articles"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/dashboard-stats"] });
-      toast({
-        title: "Import réussi",
-        description: `${data.importedCount} annonces importées depuis Vinted`,
-      });
-    },
-    onError: (error) => {
-      toast({
-        title: "Erreur d'import",
-        description: error instanceof Error ? error.message : "Erreur lors de l'import Vinted",
-        variant: "destructive",
-      });
-    },
-  });
+
 
   const handleCreateArticle = async (data: any, image?: File) => {
     await createMutation.mutateAsync({ data, image });
   };
 
-  const handleImportVinted = () => {
-    const profileUrl = "https://www.vinted.fr/member/270400658";
-    importVintedMutation.mutate(profileUrl);
+  const handleImportVintedArticles = async (articles: any[]) => {
+    for (const articleData of articles) {
+      await createMutation.mutateAsync({ data: articleData });
+    }
   };
 
   const handleMarkAsSold = async (id: number) => {
@@ -270,12 +241,11 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
                   <div className="relative group/import">
                     <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-600 rounded-xl blur opacity-60 group-hover/import:opacity-80 transition-all duration-500"></div>
                     <Button
-                      onClick={handleImportVinted}
-                      disabled={importVintedMutation.isPending}
-                      className="relative bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white px-4 sm:px-6 py-3 rounded-xl border border-white/20 backdrop-blur-xl font-medium transition-all duration-500 group-hover/import:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                      onClick={() => setIsVintedImportOpen(true)}
+                      className="relative bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white px-4 sm:px-6 py-3 rounded-xl border border-white/20 backdrop-blur-xl font-medium transition-all duration-500 group-hover/import:scale-105"
                     >
                       <Download className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                      {importVintedMutation.isPending ? "Import..." : "📥 Importer Vinted"}
+                      📥 Importer Vinted
                     </Button>
                   </div>
                   
@@ -558,6 +528,13 @@ export default function ArticleManagement({ onNavigateToDescriptionGenerator }: 
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleCreateArticle}
+      />
+
+      {/* Modal d'import Vinted */}
+      <VintedImportModal
+        isOpen={isVintedImportOpen}
+        onClose={() => setIsVintedImportOpen(false)}
+        onImportArticles={handleImportVintedArticles}
       />
     </div>
   );
