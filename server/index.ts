@@ -1,6 +1,36 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
-import { setupVite, serveStatic, log } from "./vite";
+
+// Version production sans Vite
+const log = (message: string, source = "express") => {
+  const formattedTime = new Date().toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit", 
+    second: "2-digit",
+    hour12: true,
+  });
+  console.log(`${formattedTime} [${source}] ${message}`);
+};
+
+const serveStatic = (app: express.Express) => {
+  app.use(express.static("dist/public"));
+  app.get("*", (_req, res) => {
+    res.sendFile(process.cwd() + "/dist/public/index.html");
+  });
+};
+
+// Import dynamique de Vite seulement en développement
+async function loadViteIfNeeded() {
+  if (process.env.NODE_ENV === "development") {
+    const viteModule = await import("./vite.js");
+    return {
+      setupVite: viteModule.setupVite,
+      serveStatic: viteModule.serveStatic,
+      log: viteModule.log
+    };
+  }
+  return { setupVite: null, serveStatic, log };
+}
 
 const app = express();
 app.use(express.json());
@@ -47,13 +77,13 @@ app.use((req, res, next) => {
     throw err;
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (process.env.NODE_ENV === "development") {
+  // Load Vite conditionally and setup routes
+  const { setupVite, serveStatic: staticHandler, log: logger } = await loadViteIfNeeded();
+  
+  if (process.env.NODE_ENV === "development" && setupVite) {
     await setupVite(app, server);
   } else {
-    serveStatic(app);
+    staticHandler(app);
   }
 
   // ALWAYS serve the app on the port specified in the environment variable PORT
@@ -66,7 +96,7 @@ app.use((req, res, next) => {
     host: "0.0.0.0",
     reusePort: true,
   }, () => {
-    log(`serving on port ${port}`);
+    logger(`serving on port ${port}`);
     
     // Démarrer le keep-alive automatique
     const REPL_URL = 'https://e8c39cc9-cf2c-4307-b459-339a185d3aa2-00-2fom0j0gq2vvu.picard.repl.co';
